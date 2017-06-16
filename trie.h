@@ -14,6 +14,7 @@ class Trie
 		bool contains(string s);
 		void del(string s);
 		char getChar(int, int, int, int);
+		int size();
 
 	private:
 		Node* root;

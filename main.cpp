@@ -15,6 +15,8 @@ using namespace std;
 int main() 
 {
 	Trie trie;
+	test(trie.size() == 0);
+	
 	trie.add("a");
 	trie.add("arc");
 	trie.add("area");
@@ -24,6 +26,7 @@ int main()
 	trie.add("zero");
 	trie.add("zoo");
 	trie.add("ante");
+	test(trie.size() == 9);
 
 	test(trie.contains("a"));
 	test(trie.contains("arc"));
@@ -42,6 +45,7 @@ int main()
 	trie.add("are");
 	trie.add("arm");
 	trie.add("an");
+	test(trie.size() == 12);
 
 	test(trie.contains("are"));
 	test(trie.contains("an"));
@@ -51,6 +55,7 @@ int main()
 	test(trie.contains("arc"));
 	test(trie.contains("ant"));
 	test(!trie.contains("area"));
+	test(trie.size() == 11);
 
 	cout << "Testing complete." << endl;
 

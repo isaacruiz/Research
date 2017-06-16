@@ -7,6 +7,14 @@ Trie::Trie()
 	root = new Node(0, ' ');
 }
 
+int Trie::size()
+{
+	// TODO
+	// AW: This will be useful later for quick checks on 
+	// whether the data structure is "messed up".
+	return -1;
+}
+
 void Trie::add(string s)
 {
 	Node* cur = root;
