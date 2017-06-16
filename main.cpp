@@ -1,6 +1,14 @@
 #include <iostream>
 #include "trie.h"
-#include <cassert>
+
+inline void _test(const char* expression, const char* file, int line)
+{
+	cerr << "test(" << expression << ") failed in file " << file << ", line " << line << "." << endl;
+        abort();
+}
+
+#define test(EXPRESSION) ((EXPRESSION) ? (void)0 : _test(#EXPRESSION, __FILE__, __LINE__))
+
 
 using namespace std;
 int main() {
@@ -16,33 +24,36 @@ int main() {
 	trie.add("zoo");
 	trie.add("ante");
 
-	assert(trie.contains("a") == true);
-	assert(trie.contains("arc") == true);
-	assert(trie.contains("area") == true);
-	assert(trie.contains("army") == true);
-	assert(trie.contains("armies") == true);
-	assert(trie.contains("ant") == true);
-	assert(trie.contains("ante") == true);
-	assert(trie.contains("zero") == true);
-	assert(trie.contains("zoo") == true);
+	test(trie.contains("a"));
+	test(trie.contains("arc"));
+	test(trie.contains("area"));
+	test(trie.contains("army"));
+	test(trie.contains("armies"));
+	test(trie.contains("ant"));
+	test(trie.contains("ante"));
+	test(trie.contains("zero"));
+	test(trie.contains("zoo"));
 
-	assert(trie.contains("are") == false);
-	assert(trie.contains("an") == false);
-	assert(trie.contains("arm") == false);
+	test(!trie.contains("are"));
+	test(!trie.contains("an"));
+	test(!trie.contains("arm"));
 
 	trie.add("are");
 	trie.add("arm");
 	trie.add("an");
 
-	assert(trie.contains("are") == true);
-	assert(trie.contains("an") == true);
-	assert(trie.contains("arm") == true);
+	test(trie.contains("are"));
+	test(trie.contains("an"));
+	test(trie.contains("arm"));
 
 	trie.del("area");
-	assert(trie.contains("arc") == true);
-	assert(trie.contains("ant") == true);
-	assert(trie.contains("area") == false);
-	
-	return 0;
+	test(trie.contains("arc"));
+	test(trie.contains("ant"));
+	test(!trie.contains("area"));
 
+	cout << "Testing complete." << endl;
+
+	return 0;
 }
+
+
