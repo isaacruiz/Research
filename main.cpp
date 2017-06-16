@@ -3,16 +3,17 @@
 
 inline void _test(const char* expression, const char* file, int line)
 {
-	cerr << "test(" << expression << ") failed in file " << file << ", line " << line << "." << endl;
+	cerr << "test(" << expression << ") failed in file " << file;
+	cerr << ", line " << line << "." << endl;
         abort();
 }
 
 #define test(EXPRESSION) ((EXPRESSION) ? (void)0 : _test(#EXPRESSION, __FILE__, __LINE__))
 
-
 using namespace std;
-int main() {
-	
+
+int main() 
+{
 	Trie trie;
 	trie.add("a");
 	trie.add("arc");

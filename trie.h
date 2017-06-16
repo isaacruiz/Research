@@ -6,10 +6,9 @@
 
 using namespace std;
 
-class Trie {
-
+class Trie 
+{
 	public:
-
 		Trie();
 		void add(string s);
 		bool contains(string s);
