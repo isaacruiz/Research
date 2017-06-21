@@ -19,6 +19,7 @@ class Trie
 	private:
 		Node* root;
 		int noChildren(Node* cur);
+		int size_recursion(Node* cur);
 
 };
 

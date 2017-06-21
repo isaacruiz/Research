@@ -26,6 +26,7 @@ int main()
 	trie.add("zero");
 	trie.add("zoo");
 	trie.add("ante");
+	
 	test(trie.size() == 9);
 
 	test(trie.contains("a"));

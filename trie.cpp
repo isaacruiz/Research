@@ -12,7 +12,30 @@ int Trie::size()
 	// TODO
 	// AW: This will be useful later for quick checks on 
 	// whether the data structure is "messed up".
-	return -1;
+	
+	return size_recursion(root);
+}
+
+int Trie::size_recursion(Node* cur)
+{
+	//Base case
+	if (cur == 0)
+		return 0;
+
+	//Inductive case
+	int count = 0;
+	
+	if (cur->isWord)
+		count++;
+
+	//Returns the word count of nodes children and adds to running total
+	for (int i = 0; i < 26; i++) {
+		count += size_recursion(cur->child[i]);
+	}
+
+	return count;
+	
+
 }
 
 void Trie::add(string s)
@@ -39,10 +62,11 @@ void Trie::add(string s)
 	cur->isWord = true; //Set that the last node created completes the added word
 }
 
-char Trie::getChar(int a, int b, int c, int d) 
-{
-	return root->child[a]->child[b]->child[c] -> child[d]->character;
-}
+//TODO add print method
+//char Trie::printTrie() 
+//{
+//	
+//}
 
 bool Trie::contains(string s)
 {
@@ -73,11 +97,6 @@ bool Trie::contains(string s)
 
 void Trie::del(string s)
 {
-	if (!contains(s)) 
-	{
-		cout << s + " was not found in dictionary\n\n";
-		return;
-	}
 
 	Node* cur = root;
 
