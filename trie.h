@@ -13,7 +13,8 @@ class Trie
 		void add(string s);
 		bool contains(string s);
 		void del(string s);
-		char getChar(int, int, int, int);
+		//TODO add implementation for printing out strings in the trie
+		//char getTrie();
 		int size();
 
 	private:
