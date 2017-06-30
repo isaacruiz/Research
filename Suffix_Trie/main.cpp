@@ -1,6 +1,6 @@
 #include <iostream>
 //#include "trie.h"
-#include "suffixtree.h"
+#include "suffixtrie.h"
 
 inline void _test(const char* expression, const char* file, int line)
 {
@@ -15,7 +15,8 @@ using namespace std;
 
 int main() 
 {
-	SuffixTree* st = new SuffixTree("banana");
+	SuffixTrie* st = new SuffixTrie("banana");
+	system("pause");
 	
 	test(st->size() == 6);
 	
@@ -28,12 +29,12 @@ int main()
 
 	test(!st->contains("ban"));
 	test(!st->contains("banan"));
-
+	st->printTree();
 	//st->printLowest();
 
 	delete st;
 
-	st = new SuffixTree("mississippi");
+	st = new SuffixTrie("mississippi");
 	
 	test(st->size() == 11);
 	
@@ -56,6 +57,8 @@ int main()
 	delete st;
 
 	cout << "Test completed" << endl;
+
+	return 0;
 }
 
 

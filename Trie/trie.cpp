@@ -9,10 +9,6 @@ Trie::Trie()
 
 int Trie::size()
 {
-	// TODO
-	// AW: This will be useful later for quick checks on 
-	// whether the data structure is "messed up".
-	
 	return size_recursion(root);
 }
 
@@ -64,13 +60,10 @@ void Trie::add(string s)
 	cur->isWord = true; //Set that the last node created completes the added word
 }
 
-//TODO add print method
 void Trie::printTrie(Node* cur) 
 {
 	unsigned int i = 0;
 
-
-	//
 	if (cur == 0)
 	{
 		cout << endl;
