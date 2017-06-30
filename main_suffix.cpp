@@ -18,6 +18,7 @@ int main()
 	SuffixTree* st = new SuffixTree("banana");
 	
 	test(st->size() == 6);
+	
 	test(st->contains("banana"));
 	test(st->contains("anana"));
 	test(st->contains("nana"));
@@ -28,10 +29,14 @@ int main()
 	test(!st->contains("ban"));
 	test(!st->contains("banan"));
 
+	//st->printLowest();
+
 	delete st;
 
 	st = new SuffixTree("mississippi");
+	
 	test(st->size() == 11);
+	
 	test(st->contains("mississippi"));
 	test(st->contains("ississippi"));
 	test(st->contains("ssissippi"));
@@ -43,6 +48,12 @@ int main()
 	test(st->contains("ppi"));
 	test(st->contains("pi"));
 	test(st->contains("i"));
+
+	test(!st->contains("miss"));
+	test(!st->contains("sip"));
+	//st->printLowest();
+
+	delete st;
 
 	cout << "Test completed" << endl;
 }

@@ -10,9 +10,13 @@ class SuffixTree
 		SuffixTree(string s);
 		int size();
 		bool contains(string s);
+		string lce();
+		void printLowest();
+		void printTree();
 
 	private:
 		Trie tree;
+		Node** terminalChars;
 };
 
 #endif

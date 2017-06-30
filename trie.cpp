@@ -28,7 +28,7 @@ int Trie::size_recursion(Node* cur)
 	if (cur->isWord)
 		count++;
 
-	//Returns the word count of nodes children and adds to running total
+	//Returns the word count of children nodes and adds to running total
 	for (int i = 0; i < 26; i++) {
 		count += size_recursion(cur->child[i]);
 	}
@@ -59,14 +59,33 @@ void Trie::add(string s)
 		i++;
 
 	}
+	
+
 	cur->isWord = true; //Set that the last node created completes the added word
 }
 
 //TODO add print method
-//char Trie::printTrie() 
-//{
-//	
-//}
+void Trie::printTrie(Node* cur) 
+{
+	unsigned int i = 0;
+
+
+	//
+	if (cur == 0)
+	{
+		cout << endl;
+		return;
+	}
+	
+	//Loop through Node* array and print character of each node
+	for (i = 0; i < 26; i++)
+		if (cur->child[i] != 0) {
+			cout << cur->child[i]->character;
+
+			printTrie(cur->child[i]);
+		}
+
+}
 
 bool Trie::contains(string s)
 {

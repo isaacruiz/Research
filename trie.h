@@ -10,15 +10,16 @@ class Trie
 {
 	public:
 		Trie();
-		void add(string s);
+		void add(string s); //added node* to return address of last node added to tree
 		bool contains(string s);
 		void del(string s);
-		//TODO add implementation for printing out strings in the trie
-		//char getTrie();
+		
+		void printTrie(Node* cur);
 		int size();
+		Node* root;
 
 	private:
-		Node* root;
+		
 		int noChildren(Node* cur);
 		int size_recursion(Node* cur);
 
