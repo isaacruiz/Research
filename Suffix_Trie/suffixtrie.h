@@ -13,15 +13,17 @@ class SuffixTrie
 		SuffixTrie(string s);
 		int size();
 		bool contains(string s);
-		string lce();
+		string longestComExt();
 		void printLowest();
 		void printTree();
 
 	private:
 		Node* root;
 		Node** terminalChars;
+		string str;
 		int size_recursion(Node* root);
 		void print_recursive(Node* root);
+		int arrayIndex(char c);
 };
 
 #endif

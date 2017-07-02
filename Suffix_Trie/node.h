@@ -4,14 +4,14 @@
 class Node 
 {
 	public:
-		Node* child[26] = {};
-		Node* parent;
+		//Node* child[5] = {};
+		Node* child[27] = {};
+		//Node* parent;
 		char character;
 		bool isWord = false;
 
-		Node(Node* p, char c)
+		Node(char c)
 		{
-			parent = p;
 			character = c;
 		}
 };

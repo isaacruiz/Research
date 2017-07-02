@@ -13,6 +13,7 @@ class Node
 		{
 			parent = p;
 			character = c;
+
 		}
 };
 
