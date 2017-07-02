@@ -14,12 +14,12 @@ class SuffixTrie
 		int size();
 		bool contains(string s);
 		string longestComExt();
-		void printLowest();
 		void printTree();
 
 	private:
+		
 		Node* root;
-		Node** terminalChars;
+		Node** terminalChars; //Array to store pointers to leaves
 		string str;
 		int size_recursion(Node* root);
 		void print_recursive(Node* root);

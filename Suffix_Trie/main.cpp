@@ -18,41 +18,40 @@ int main()
 	SuffixTrie* st = new SuffixTrie("banana$");
 	
 	test(st->size() == 7);
-	st->printTree();
-	//test(st->contains("banana"));
-	//test(st->contains("anana"));
-	//test(st->contains("nana"));
-	//test(st->contains("ana"));
-	//test(st->contains("na"));
-	//test(st->contains("a"));
+	test(st->contains("banana$"));
+	test(st->contains("anana$"));
+	test(st->contains("nana$"));
+	test(st->contains("ana$"));
+	test(st->contains("na$"));
+	test(st->contains("a$"));
+	test(st->contains("$"));
 
-	//test(!st->contains("ban"));
-	//test(!st->contains("banan"));
-	//st->printTree();
+	test(!st->contains("ban"));
+	test(!st->contains("banana"));
 
-	//delete st;
+	delete st;
 
-	//st = new SuffixTrie("mississippi");
-	//
-	//test(st->size() == 11);
-	//
-	//test(st->contains("mississippi"));
-	//test(st->contains("ississippi"));
-	//test(st->contains("ssissippi"));
-	//test(st->contains("sissippi"));
-	//test(st->contains("issippi"));
-	//test(st->contains("ssippi"));
-	//test(st->contains("sippi"));
-	//test(st->contains("ippi"));
-	//test(st->contains("ppi"));
-	//test(st->contains("pi"));
-	//test(st->contains("i"));
+	st = new SuffixTrie("mississippi$");
+	
+	test(st->size() == 12);
+	
+	test(st->contains("mississippi$"));
+	test(st->contains("ississippi$"));
+	test(st->contains("ssissippi$"));
+	test(st->contains("sissippi$"));
+	test(st->contains("issippi$"));
+	test(st->contains("ssippi$"));
+	test(st->contains("sippi$"));
+	test(st->contains("ippi$"));
+	test(st->contains("ppi$"));
+	test(st->contains("pi$"));
+	test(st->contains("i$"));
+	test(st->contains("$"));
 
-	//test(!st->contains("miss"));
-	//test(!st->contains("sip"));
-	////st->printTree();
+	test(!st->contains("miss"));
+	test(!st->contains("mississippi"));
 
-	//delete st;
+	delete st;
 
 	cout << "Test completed" << endl;
 

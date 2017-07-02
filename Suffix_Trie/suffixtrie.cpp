@@ -94,11 +94,6 @@ string SuffixTrie::longestComExt()
 
 }
 
-void SuffixTrie::printLowest()
-{
-
-}
-
 void SuffixTrie::printTree()
 {
 	print_recursive(root);
@@ -148,7 +143,7 @@ int SuffixTrie::size_recursion(Node* cur)
 	return count;
 }
 
-//Map array index when using 4 cardinal directions
+//Map array index when using 4 direction characters
 int SuffixTrie::arrayIndex(char c)
 {
 	switch (c)
