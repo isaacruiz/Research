@@ -28,9 +28,9 @@ int main()
 
 	test(!st->contains("ban"));
 	test(!st->contains("banana"));
-
-	cout << st->depthLCA;
-	//st->printTree();
+	
+	cout << "Longest common extension of \"banana\"" << endl;
+	st->printLCE();
 	delete st;
 
 	st = new SuffixTrie("mississippi$");
@@ -52,8 +52,16 @@ int main()
 
 	test(!st->contains("miss"));
 	test(!st->contains("mississippi"));
-
+	
+	cout << "Longest common extension of \"mississippi\"" << endl;
+	st->printLCE();
+	
 	delete st;
+
+	st = new SuffixTrie("abbababaababba$");
+	
+	cout << "Longest common extension of \"a b b a b a b a a b a b b a\"" << endl;
+	st->printLCE();
 
 	cout << "Test completed" << endl;
 

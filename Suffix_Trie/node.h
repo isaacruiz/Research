@@ -10,6 +10,7 @@ class Node
 		Node* child[CHARSET] = {};
 		//Node* parent;
 		char character;
+		int noChildren = 0;
 		bool isWord = false;
 
 		Node(char c, int d)
