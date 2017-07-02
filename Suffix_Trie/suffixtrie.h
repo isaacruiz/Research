@@ -6,6 +6,8 @@
 
 using namespace std;
 
+
+
 class SuffixTrie
 {
 	public:
@@ -15,7 +17,8 @@ class SuffixTrie
 		bool contains(string s);
 		string longestComExt();
 		void printTree();
-
+		void depthLowestComAncestor(Node* cur);
+		int depthLCA; //Depth of lowest common ancestor
 	private:
 		
 		Node* root;
@@ -24,6 +27,7 @@ class SuffixTrie
 		int size_recursion(Node* root);
 		void print_recursive(Node* root);
 		int arrayIndex(char c);
+		
 };
 
 #endif

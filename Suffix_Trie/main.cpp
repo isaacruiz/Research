@@ -29,6 +29,8 @@ int main()
 	test(!st->contains("ban"));
 	test(!st->contains("banana"));
 
+	cout << st->depthLCA;
+	//st->printTree();
 	delete st;
 
 	st = new SuffixTrie("mississippi$");
