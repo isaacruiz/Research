@@ -14,57 +14,68 @@ using namespace std;
 
 int main() 
 {
-	
-	SuffixTrie* st = new SuffixTrie("banana$");
-	
-	test(st->size() == 7);
-	test(st->contains("banana$"));
-	test(st->contains("anana$"));
-	test(st->contains("nana$"));
-	test(st->contains("ana$"));
-	test(st->contains("na$"));
-	test(st->contains("a$"));
-	test(st->contains("$"));
+	SuffixTrie st1("banana$");
 
-	test(!st->contains("ban"));
-	test(!st->contains("banana"));
-	
-	cout << "Longest common extension of \"banana\"" << endl;
-	st->printLCE();
-	delete st;
+	test(st1.size() == 7);
 
-	st = new SuffixTrie("mississippi$");
-	
-	test(st->size() == 12);
-	
-	test(st->contains("mississippi$"));
-	test(st->contains("ississippi$"));
-	test(st->contains("ssissippi$"));
-	test(st->contains("sissippi$"));
-	test(st->contains("issippi$"));
-	test(st->contains("ssippi$"));
-	test(st->contains("sippi$"));
-	test(st->contains("ippi$"));
-	test(st->contains("ppi$"));
-	test(st->contains("pi$"));
-	test(st->contains("i$"));
-	test(st->contains("$"));
+	test(st1.contains("banana$"));
+	test(st1.contains("anana$"));
+	test(st1.contains("nana$"));
+	test(st1.contains("ana$"));
+	test(st1.contains("na$"));
+	test(st1.contains("a$"));
+	test(st1.contains("$"));
+	test(st1.contains(""));
 
-	test(!st->contains("miss"));
-	test(!st->contains("mississippi"));
-	
-	cout << "Longest common extension of \"mississippi\"" << endl;
-	st->printLCE();
-	
-	delete st;
+	test(!st1.contains("a"));
+	test(!st1.contains("ban"));
+	test(!st1.contains("banana"));
 
-	st = new SuffixTrie("abbababaababba$");
+	test(st1.LCE(1, 3) == 0); // LCE of "anana$" and "ana$" is "ana"	
+	test(st1.LCE(0, 3) == 0); // LCE of "banana$" and "ana$" is ""	
+	test(st1.LCE(2, 4) == 2); // LCE of "nana$" and "na$" is "na"	
+	test(st1.LCE(1, 2) == 0); // LCE of "anana$" and "nana$ is ""
+	test(st1.LCE(1, 1) == 6); // LCE of "anana$" and "anana$ is "anana$"
+	test(st1.LCE(99, 1) == -1); // Invalid input case: return -1
+	test(st1.LCE(99, 99) == -1); // Invalid input case: return -1
+	test(st1.LCE(-99, 99) == -1); // Invalid input case: return -1
+	test(st1.LCE(-99, -555) == -1); // Invalid input case: return -1
+
+
+	SuffixTrie st2("mississippi$");
 	
-	cout << "Longest common extension of \"a b b a b a b a a b a b b a\"" << endl;
-	st->printLCE();
+	test(st2.size() == 12);
+	
+	test(st2.contains("mississippi$"));
+	test(st2.contains("ississippi$"));
+	test(st2.contains("ssissippi$"));
+	test(st2.contains("sissippi$"));
+	test(st2.contains("issippi$"));
+	test(st2.contains("ssippi$"));
+	test(st2.contains("sippi$"));
+	test(st2.contains("ippi$"));
+	test(st2.contains("ppi$"));
+	test(st2.contains("pi$"));
+	test(st2.contains("i$"));
+	test(st2.contains("$"));
 
-	cout << "Test completed" << endl;
+	test(!st2.contains("miss"));
+	test(!st2.contains("mississippi"));
 
+	test(st2.LCE(1, 4) == 4); // LCE of "ississippi$" and "issippi$" is "issi"
+	test(st2.LCE(4, 7) == 1); // LCE of "issippi$" and "ippi$" is "i"
+	test(st2.LCE(0, 1) == 0); // LCE of "mississippi$" and "ississippi$" is ""
+	test(st2.LCE(2, 2) == 10); // LCE of "ssissippi$" and "ssissippi$" is "ssissippi$"
+	
+
+	SuffixTrie st3("abbababaababba$");
+
+	// AW: I like your choice of string.
+	// Try to build a set of tests like those above,
+	// in particular LCE() calls that return a variety of values.	
+	
+
+	cout << "Test completed." << endl;
 	return 0;
 }
 

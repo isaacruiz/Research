@@ -51,9 +51,18 @@ SuffixTrie::SuffixTrie(string s)
 	longestComExt(root, "");
 }
 
+SuffixTrie :: ~SuffixTrie()
+{
+	// AW: This is a _destructor_
+	// It is called when the object "dies" 
+	// (either is deleted or goes out of scope)
+	// It needs to handle "clean up": deleting any memory allocated
+	// using the "new" keyword
+}
+
 int SuffixTrie::size()
 {
-		return size_recursion(root);
+	return size_recursion(root);
 }
 
 bool SuffixTrie::contains(string s)
@@ -86,6 +95,11 @@ bool SuffixTrie::contains(string s)
 	return (cur->isWord);
 }
 
+int SuffixTrie::LCE(int i, int j)
+{
+	return -1;
+}
+
 void SuffixTrie::depthLowestComAncestor(Node* cur)
 {
 	if (cur == 0)
@@ -105,8 +119,8 @@ void SuffixTrie::depthLowestComAncestor(Node* cur)
 }
 
 /*
-Lowest node with more than 1 child is the lowest common ancestor. Characters from root to
-lowest common ancestor form the longest common extension
+Lowest node with more than 1 child is the lowest common ancestor. 
+Characters from root to lowest common ancestor form the longest common extension
 */
 void SuffixTrie::longestComExt(Node* cur, string s)
 {
@@ -137,7 +151,7 @@ void SuffixTrie::longestComExt(Node* cur, string s)
 	}
 }
 
-void SuffixTrie::printTree()
+void SuffixTrie::print()
 {
 	print_recursive(root);
 }
@@ -157,7 +171,6 @@ void SuffixTrie::print_recursive(Node* cur)
 		if (cur->child[i] != 0)
 		{
 			cout << cur->child[i]->character << " " << cur->child[i]->getDepth() << endl;
-
 			print_recursive(cur->child[i]);
 		}
 }
@@ -187,6 +200,7 @@ void SuffixTrie::printLCE()
 	for (int i = 0; i < capacity; i++)
 		cout << longComExt[i] << endl;
 }
+
 //Map array index when using 4 direction characters
 int SuffixTrie::arrayIndex(char c)
 {
