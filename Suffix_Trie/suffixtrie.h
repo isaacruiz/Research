@@ -38,7 +38,9 @@ class SuffixTrie
 	private:
 		// Recursive calls for public methods
 		int size_recursion(Node* root);
+		int LCE_recursive(Node* cur, int i, int j);
 		void print_recursive(Node* root);
+		void delete_tree(Node* root);
 
 		Node* root;
 		string str;
