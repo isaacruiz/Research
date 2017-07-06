@@ -8,7 +8,6 @@ class Node
 	public:
 
 		Node* child[CHARSET] = {};
-		//Node* parent;
 		char character;
 		int noChildren = 0;
 		bool isWord = false;

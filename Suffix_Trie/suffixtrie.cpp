@@ -11,7 +11,7 @@ SuffixTrie::SuffixTrie(string s)
 	str = s;
 
 	root = new Node(NULL, curDepth);
-	depthLCA = 0;
+	//depthLCA = 0;
 	
 	//Loop counter
 	unsigned int i = 0;
@@ -76,6 +76,26 @@ int SuffixTrie::size()
 	return size_recursion(root);
 }
 
+int SuffixTrie::size_recursion(Node* cur)
+{
+	//Base case
+	if (cur == 0)
+		return 0;
+
+	//Inductive case
+	int count = 0;
+
+	if (cur->character == '$')
+		count++;
+
+	//Returns the word count of children nodes and adds to running total
+	for (int i = 0; i < CHARSET; i++)
+	{
+		count += size_recursion(cur->child[i]);
+	}
+	return count;
+}
+
 bool SuffixTrie::contains(string s)
 {
 	unsigned int i = 0;
@@ -111,14 +131,17 @@ bool SuffixTrie::contains(string s)
 
 int SuffixTrie::LCE(int i, int j)
 {
-	int lengthLCE = 0;
 	if (i < 0 || i >= (int)str.length())
 		return -1;
 
 	if (j < 0 || j >= (int)str.length())
 		return -1;
 
+	return LCE_recursive(root, i, j);
+	
 	//naive method iterating through string
+	//int lengthLCE = 0;
+
 	/*while (i < str.length() && j  < str.length())
 	{
 		if (str.at(i) != str.at(j))
@@ -129,15 +152,12 @@ int SuffixTrie::LCE(int i, int j)
 		j++;
 	}
 	return lengthLCE;*/
-
-	return LCE_recursive(root, i, j);
-
 }
 
 //Recursively check if the current character matches at both given indexes
 int SuffixTrie::LCE_recursive(Node* cur, int i, int j)
 {
-	if (cur == 0 || i >= str.length() || i < 0 || j >= str.length() || j < 0)
+	if (cur == 0 || i >= (int)str.length() || i < 0 || j >= (int)str.length() || j < 0)
 		return 0;
 
 	int index1;
@@ -157,57 +177,6 @@ int SuffixTrie::LCE_recursive(Node* cur, int i, int j)
 
 	return 1 + LCE_recursive(cur->child[index1], i + 1, j + 1);
 
-}
-
-void SuffixTrie::depthLowestComAncestor(Node* cur)
-{
-	if (cur == 0)
-		return;
-
-	for (int i = 0; i < CHARSET; i++)
-	{
-		if (cur->child[i] != 0)
-		{
-			cur->noChildren++;
-			depthLowestComAncestor(cur->child[i]);
-		}
-
-		if (cur->noChildren > 1 && cur->getDepth() > depthLCA)
-			depthLCA = cur->getDepth();
-	}
-}
-
-/*
-Lowest node with more than 1 child is the lowest common ancestor. 
-Characters from root to lowest common ancestor form the longest common extension
-*/
-void SuffixTrie::longestComExt(Node* cur, string s)
-{
-	//If cur falls off the tree or depth is greater than previously determined depth of lowest
-	//common ancestor, return
-	if (cur == 0 || cur->getDepth() > depthLCA)
-		return;
-
-	//Loop through the node pointer array
-	for (int i = 0; i < CHARSET; i++)
-	{
-		if (cur->child[i] != 0)
-			longestComExt(cur->child[i], s + cur->character);
-		
-		if (cur->getDepth() == depthLCA && cur != 0 && cur->noChildren > 1)
-		{
-			//Loop through LCE array and add current string if current depth is equal to depth of
-			//lowest common ancestor and current node has more than one child
-			for (int j = 0; j < capacity; j++)
-			{
-				if (longComExt[j] == "")
-				{
-					longComExt[j] = s + cur->character;
-					return;
-				}
-			}
-		}	
-	}
 }
 
 void SuffixTrie::print()
@@ -232,53 +201,5 @@ void SuffixTrie::print_recursive(Node* cur)
 			cout << cur->child[i]->character << " " << cur->child[i]->getDepth() << endl;
 			print_recursive(cur->child[i]);
 		}
-}
-
-int SuffixTrie::size_recursion(Node* cur)
-{
-	//Base case
-	if (cur == 0)
-		return 0;
-
-	//Inductive case
-	int count = 0;
-
-	if (cur->character == '$')
-		count++;
-
-	//Returns the word count of children nodes and adds to running total
-	for(int i = 0;  i < CHARSET; i++)
-	{
-		count += size_recursion(cur->child[i]);
-	}
-	return count;
-}
-
-void SuffixTrie::printLCE()
-{
-	for (int i = 0; i < capacity; i++)
-		cout << longComExt[i] << endl;
-}
-
-//Map array index when using 4 direction characters
-int SuffixTrie::arrayIndex(char c)
-{
-	switch (c)
-	{
-		case 'E':
-			return 1;
-
-		case 'N':
-			return 2;
-
-		case 'S':
-			return 3;
-
-		case 'W':
-			return 4;
-
-		default:
-			return 0;
-	}
 }
 

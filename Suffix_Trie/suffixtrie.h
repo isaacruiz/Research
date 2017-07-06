@@ -28,12 +28,6 @@ class SuffixTrie
 		// of the substrings of the trie's string that start
 		// at indices i and j. 
 		int LCE(int i, int j);
-
-		// Other stuff?
-		void longestComExt(Node* cur, string s);
-		void depthLowestComAncestor(Node* cur);
-		int depthLCA; //Depth of lowest common ancestor
-		void printLCE();
 		
 	private:
 		// Recursive calls for public methods
@@ -44,11 +38,6 @@ class SuffixTrie
 
 		Node* root;
 		string str;
-
-		// Other stuff?
-		const int capacity = 5; //Array cap for number of LCEs
-		string* longComExt;
-		int arrayIndex(char c);
 };
 
 #endif
