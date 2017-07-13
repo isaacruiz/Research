@@ -5,7 +5,7 @@
 
 bool isBoundaryWord(string s)
 {
-	if (circularWord(s) && clockwise(s) && !collision(s))
+	if (!collision(s) && clockwise(s) && circularWord(s))
 		return true;
 
 	else
@@ -18,7 +18,8 @@ bool tiles(string s)
 }
 
 //Test if the path ends where it started
-//Merge into one method with collision to determine at the same time if the path is enclosed and non looping
+//Merge into one method with collision to determine at
+//the same time if the path is enclosed and non looping
 bool circularWord(string s)
 {
 	int up, down, left, right;
@@ -51,93 +52,100 @@ bool circularWord(string s)
 		return false;
 }
 
+//Counts the number of clockwise and counter clockwise turns to
+//determine if path traversal is clockwise
 bool clockwise(string s)
 {
-	char current;
-	char next;
-	int totalAngle = 0;
+	char current, next;
+	int cw = 0, ccw = 0;
 
 	for (size_t i = 0; i < s.length(); i++)
 	{
 		current = s.at(i);
-		next = s.at(i + 1);
+		
+		if (i == s.length() - 1)
+			next = s.at(0);
+		
+		else
+			next = s.at(i + 1);
 
 		switch (current)
 		{
 			case 'u':
 				if (next == 'r')
-					totalAngle += 90;
+					cw++;
 				if (next == 'l')
-					totalAngle -= 90;
+					ccw++;
 				break;
 
 			case 'd':
 				if (next == 'l')
-					totalAngle += 90;
+					cw++;
 				if (next == 'r')
-					totalAngle -= 90;
+					ccw++;
 				break;
 
 			case 'l':
 				if (next == 'u')
-					totalAngle += 90;
+					cw++;
 				if (next == 'd')
-					totalAngle -= 90;
+					ccw++;
 				break;
 
 			case 'r':
 				if (next == 'd')
-					totalAngle += 90;
+					cw++;
 				if (next == 'u')
-					totalAngle -= 90;
+					ccw++;
 				break;
 		}
-		//cout << totalAngle << endl;
-		if (totalAngle > 0)
-			return true;
-
-		else
-			return false;
 	}
+
+	if (cw > ccw)
+		return true;
+
+	else
+		return false;
 }
 
 //Returns true if the boundary word loops back on itself
 bool collision(string s)
 {
-	int x = 0, y = 0;
+	int x = 0, y = 0, mul = 100;
 	
 	set<int> coordinates;
 
-	coordinates.insert(100* x + y);
-	//cout << "(" << x << ", " << y << ")" << endl;
+	coordinates.insert(mul* x + y); //Multiply x by mul to ensure "unique" sum
+									//(1,0) -> 1   and (0,1) -> 1
+									//(1,0) -> 100 and (0,1) -> 1
+									//Fails if y coordinate reaches +-mul
 
 	for (size_t i = 0; i < s.length() - 1; i++)
 	{
 		switch (s.at(i))
 		{
-		case 'u':
-			y++;
-			break;
+			case 'u':
+				y++;
+				break;
 
-		case 'd':
-			y--;
-			break;
+			case 'd':
+				y--;
+				break;
 
-		case 'l':
-			x--;
-			break;
+			case 'l':
+				x--;
+				break;
 
-		case 'r':
-			x++;
-			break;
+			case 'r':
+				x++;
+				break;
 		}
-		//cout << "(" << x << ", " << y << ")" << endl;
 
-		if (coordinates.find(100 * x + y) != coordinates.end())
+		if (coordinates.find(mul * x + y) != coordinates.end())
 			return true;
 		
 		else
-			coordinates.insert(100 * x + y);
+			coordinates.insert(mul * x + y);
 	}
 
 	return false;

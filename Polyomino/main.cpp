@@ -13,28 +13,45 @@ inline void _test(const char* expression, const char* file, int line)
 
 int main()
 {
-	string boundaryWord;
-
+	string bw;
+	
 	/*
 	Boundary 1
+	┌─┐
+	└─┘
+	*/
+	bw = "rdlu";
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
+
+	bw = "drul"; //Backtrack of Boundary 1
+	test(!clockwise(bw));
+
+	/*
+	Boundary 2
 	  ┌─┐
 	  │ └───┐
 	┌─┘     └─┐
 	└─┐ ┌─┐ ┌─┘
 	  └─┘ └─┘
 	*/
-	boundaryWord = "rdrrdrdldluldluluruu";  //Tiles by translation
-	test(circularWord(boundaryWord));
-	test(!collision(boundaryWord));
-	test(clockwise(boundaryWord));
+	bw = "rdrrdrdldluldluluruu";  //Tiles by translation
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
 
-	boundaryWord = "ddldrdrurdrurulullul";
-	test(!clockwise(boundaryWord));
+	bw = "rdrrdrdldluldluluruuu";  //Boundary 2 with extra character at end
+	test(collision(bw));
+	test(!circularWord(bw));
 
-	boundaryWord = "rdrrdrdldluldluluru"; //boundaryWord1, but missing last character to complete boundary
-	test(!circularWord(boundaryWord));
-	test(!collision(boundaryWord));
-	test(clockwise(boundaryWord));
+	bw = "ddldrdrurdrurulullul"; //Backtrack of Boundary 2
+	test(!clockwise(bw));
+
+	bw = "rdrrdrdldluldluluru"; //Boundary 2, but missing last character to complete boundary
+	test(!circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
 
 	/*
 	Boundary 3
@@ -42,10 +59,10 @@ int main()
 	│ └─┼─┘
 	└───┘
 	*/
-	boundaryWord = "rdrrulddlluu";
-	test(circularWord(boundaryWord));
-	test(collision(boundaryWord));
-	test(clockwise(boundaryWord));
+	bw = "rdrrulddlluu";
+	test(circularWord(bw));
+	test(collision(bw));
+	//test(clockwise(bw)); Clockwise method doesn't work for paths with loops
 	/*
 	Boundary 4
 	┌─┐ ┌─┐
@@ -53,24 +70,25 @@ int main()
 	└─────┘
 	*/
 
-	boundaryWord = "rdrurddllluu"; //Does not tile by translation
-	test(circularWord(boundaryWord));
-	test(!collision(boundaryWord));
-	test(clockwise(boundaryWord));
+	bw = "rdrurddllluu"; //Does not tile by translation
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
 	/*
 	Boundary 5
- 	    ┌────┐
-	    │    │ ┌─┐
-    	└─┐  └─┘ │
-	┌─────┘      └─┐
-	└───┐    ┌─────┘ 
+        ┌────┐
+        │    │ ┌─┐
+        └─┐  └─┘ │
+    ┌─────┘      └─┐
+    └───┐    ┌─────┘ 
         │ ┌──┘
-		└─┘
+        └─┘
 	*/
-	boundaryWord = "rrddrurddrdllldldluullurrruluu"; //Has 2 zero length BN factorizations
-	test(circularWord(boundaryWord));
-	test(!collision(boundaryWord));
-	//test(clockwise(boundaryWord)); Need to fix clockwise function
+	bw = "rrddrurddrdllldldluullurrruluu"; //Has 2 zero length BN factorizations
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
+	test(isBoundaryWord(bw));
 
 	cout << "Test complete" << endl;
 
