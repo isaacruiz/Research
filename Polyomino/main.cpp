@@ -25,8 +25,24 @@ int main()
 	test(!collision(bw));
 	test(clockwise(bw));
 
-	bw = "drul"; //Backtrack of Boundary 1
+	//Backtrack of Boundary 1
+	bw = "drul"; 
+	test(circularWord(bw));
+	test(!collision(bw));
 	test(!clockwise(bw));
+
+	//Shift of Boundary 1
+	bw = "dlur";
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(clockwise(bw));
+
+	//Backtrack of shift of Boundary 1
+	bw = "ruld";
+	test(circularWord(bw));
+	test(!collision(bw));
+	test(!clockwise(bw));
+
 
 	/*
 	Boundary 2
