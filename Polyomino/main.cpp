@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-
+#include <stdlib.h>
 #include "polyomino.h"
 
 inline void _test(const char* expression, const char* file, int line)
@@ -63,17 +63,18 @@ int main()
 	test(circularWord(bw));
 	test(collision(bw));
 	//test(clockwise(bw)); Clockwise method doesn't work for paths with loops
+	
 	/*
 	Boundary 4
 	┌─┐ ┌─┐
 	│ └─┘ │
 	└─────┘
 	*/
-
 	bw = "rdrurddllluu"; //Does not tile by translation
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
+	
 	/*
 	Boundary 5
         ┌────┐
@@ -84,6 +85,7 @@ int main()
         │ ┌──┘
         └─┘
 	*/
+
 	bw = "rrddrurddrdllldldluullurrruluu"; //Has 2 zero length BN factorizations
 	test(circularWord(bw));
 	test(!collision(bw));

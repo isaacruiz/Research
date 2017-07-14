@@ -1,4 +1,4 @@
-#include "polyomino.h"
+﻿#include "polyomino.h"
 #include <map>
 #include <iostream>
 #include<set>
@@ -14,7 +14,8 @@ bool isBoundaryWord(string s)
 
 bool tiles(string s)
 {
-
+	//for every possible six locations
+	//iterate over all possible choices of 6 positions
 }
 
 //Test if the path ends where it started
@@ -151,14 +152,54 @@ bool collision(string s)
 	return false;
 }
 
-//string backtrack(string s)
-//{
-//	string backtrack = "";
-//
-//	for (size_t i = s.length() - 1; i >= 0; i--)
-//	{
-//		backtrack += s.at(i);
-//		cout << "i: " << i << " " << s.at(i) << endl;;
-//	}
-//	return backtrack;
-//}
+string backtrack(string s)
+{
+	string backtrack = "";
+
+	for (int i = s.length() - 1; i >= 0; i--)
+	{
+		switch (s.at(i))
+		{
+		case 'u':
+			backtrack += 'd';
+			break;
+
+		case 'd':
+			backtrack += 'u';
+			break;
+
+		case 'l':
+			backtrack += 'r';
+			break;
+
+		case 'r':
+			backtrack += 'l';
+			break;
+		}
+	}
+	return backtrack;
+
+}
+
+void printPolyomino(string s)
+{
+	string c[] = {" ", "┌", "┐", "┘", "└","─","│","┼"};
+	string ** board = new string*[s.length()];
+	for (int i = 0; i < s.length(); i++)
+		board[i] = new string[s.length()];
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		for (int j = 0; j < s.length(); j++)
+			board[i][j] = ' ';
+	}
+
+	board[4][6] = "┌";
+	for (int i = 0; i < s.length(); i++)
+	{
+		for (int j = 0; j < s.length(); j++)
+			cout << board[i][j];
+		cout << endl;
+	}
+	
+}
