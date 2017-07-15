@@ -108,7 +108,7 @@ int main()
 	test(clockwise(bw));
 	test(isBoundaryWord(bw));
 
-	cout << "Test complete" << endl;
+	cout << "Tests completed" << endl;
 
 	return 0;
 }

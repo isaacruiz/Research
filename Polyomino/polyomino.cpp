@@ -15,12 +15,12 @@ bool isBoundaryWord(string s)
 bool tiles(string s)
 {
 	//for every possible six locations
-	//iterate over all possible choices of 6 positions
+	//iterate over all possible choices of 6 position
+	return false;
+
 }
 
 //Test if the path ends where it started
-//Merge into one method with collision to determine at
-//the same time if the path is enclosed and non looping
 bool circularWord(string s)
 {
 	int up, down, left, right;
@@ -179,27 +179,4 @@ string backtrack(string s)
 	}
 	return backtrack;
 
-}
-
-void printPolyomino(string s)
-{
-	string c[] = {" ", "┌", "┐", "┘", "└","─","│","┼"};
-	string ** board = new string*[s.length()];
-	for (int i = 0; i < s.length(); i++)
-		board[i] = new string[s.length()];
-
-	for (int i = 0; i < s.length(); i++)
-	{
-		for (int j = 0; j < s.length(); j++)
-			board[i][j] = ' ';
-	}
-
-	board[4][6] = "┌";
-	for (int i = 0; i < s.length(); i++)
-	{
-		for (int j = 0; j < s.length(); j++)
-			cout << board[i][j];
-		cout << endl;
-	}
-	
 }
