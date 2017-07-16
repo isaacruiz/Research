@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-	print("test print");
+	print("test print");//Not doing anything with string yet
 	return 0;
 }
