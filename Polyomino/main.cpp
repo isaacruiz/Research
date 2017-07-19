@@ -37,7 +37,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
-	test(tiles(bw));
+	//test(tiles(bw));
 
 	//Backtrack of shift of Boundary 1
 	bw = "ruld";

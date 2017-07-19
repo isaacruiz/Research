@@ -1,6 +1,7 @@
 ﻿#include "polyomino.h"
 #include <map>
 #include <iostream>
+#include <iomanip>
 #include<set>
 
 bool isBoundaryWord(string s)
@@ -19,6 +20,7 @@ bool tiles(string s)
 	string str = s + s;
 	int strlen =(int)s.length();
 	int posA = 0, lenA = 1, lenB = 1;
+	int posB, posC;
 	string A, B, C;
 
 	//Iterate over all possible positions of A
@@ -27,16 +29,28 @@ bool tiles(string s)
 		for(lenA = 1; lenA < strlen/2; lenA++)
 		{
 			A = str.substr(posA, lenA);
+			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
+				<< "Acomp: " << str.substr(posA + strlen / 2, lenA) << endl;
 			if(reverseComplement(A) == str.substr(posA + strlen/2, lenA))
 			{
+				cout << endl;
+
 				for(lenB = 1; lenA + lenB < strlen/2; lenB++)
 				{
-					B = str.substr(posA + lenA, lenB);
-					if(reverseComplement(B) == str.substr(posA + lenA + strlen/2, lenB))
+					posB = posA + lenA;
+					B = str.substr(posB, lenB);
+					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
+						<< "Bcomp: " << str.substr(posB + strlen / 2, lenB) << endl;
+					if(reverseComplement(B) == str.substr(posB + strlen/2, lenB))
 					{
-						C = str.substr(posA + lenA + lenB, strlen/2 - lenB);
-						if(reverseComplement(C) == str.substr(posA + lenA + lenB + strlen/2, strlen/2 - lenB))
+						cout << endl;
+						posC = posB + lenB;
+						C = str.substr(posC, strlen/2 - lenB);
+						cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
+							<< "Ccomp: " << str.substr(posC + strlen / 2, lenB) << endl;
+						if(reverseComplement(C) == str.substr(posC + strlen/2, strlen/2 - lenB))
 							return true;
+						cout << endl;
 					}
 				}
 			}
