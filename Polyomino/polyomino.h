@@ -11,8 +11,8 @@ bool tiles(string s);
 bool circularWord(string s);
 bool clockwise(string s);
 bool collision(string s);
-//returns the backtrack/reverse complement
-string backtrack(string s);
+//returns the reverse complement
+string reverseComplement(string s);
 void printPolyomino(string s);
 
 #endif

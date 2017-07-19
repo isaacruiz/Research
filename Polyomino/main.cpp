@@ -24,6 +24,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
+//	test(tiles(bw));
 
 	//Backtrack of Boundary 1
 	bw = "drul"; 
@@ -36,6 +37,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
+	test(tiles(bw));
 
 	//Backtrack of shift of Boundary 1
 	bw = "ruld";
@@ -56,6 +58,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
+	test(tiles(bw));
 
 	bw = "rdrrdrdldluldluluruuu";  //Boundary 2 with extra character at end
 	test(collision(bw));
@@ -90,7 +93,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
-	
+	test(!tiles(bw));
 	/*
 	Boundary 5
         ┌────┐
@@ -107,6 +110,7 @@ int main()
 	test(!collision(bw));
 	test(clockwise(bw));
 	test(isBoundaryWord(bw));
+	test(tiles(bw));
 
 	cout << "Tests completed" << endl;
 

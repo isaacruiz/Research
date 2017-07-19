@@ -16,6 +16,32 @@ bool tiles(string s)
 {
 	//for every possible six locations
 	//iterate over all possible choices of 6 position
+	string str = s + s;
+	int strlen =(int)s.length();
+	int posA = 0, lenA = 1, lenB = 1;
+	string A, B, C;
+
+	//Iterate over all possible positions of A
+	for (posA = 0; posA < strlen/2; posA++)
+	{
+		for(lenA = 1; lenA < strlen/2; lenA++)
+		{
+			A = str.substr(posA, lenA);
+			if(reverseComplement(A) == str.substr(posA + strlen/2, lenA))
+			{
+				for(lenB = 1; lenA + lenB < strlen/2; lenB++)
+				{
+					B = str.substr(posA + lenA, lenB);
+					if(reverseComplement(B) == str.substr(posA + lenA + strlen/2, lenB))
+					{
+						C = str.substr(posA + lenA + lenB, strlen/2 - lenB);
+						if(reverseComplement(C) == str.substr(posA + lenA + lenB + strlen/2, strlen/2 - lenB))
+							return true;
+					}
+				}
+			}
+		}
+	}
 	return false;
 
 }
@@ -40,7 +66,6 @@ bool circularWord(string s)
 			case 'l':
 				left++;
 				break;
-
 			case 'r':
 				right++;
 				break;
@@ -152,31 +177,31 @@ bool collision(string s)
 	return false;
 }
 
-string backtrack(string s)
+string reverseComplement(string s)
 {
-	string backtrack = "";
+	string rc = "";
 
 	for (int i = s.length() - 1; i >= 0; i--)
 	{
 		switch (s.at(i))
 		{
 		case 'u':
-			backtrack += 'd';
+			rc += 'd';
 			break;
 
 		case 'd':
-			backtrack += 'u';
+			rc += 'u';
 			break;
 
 		case 'l':
-			backtrack += 'r';
+			rc += 'r';
 			break;
 
 		case 'r':
-			backtrack += 'l';
+			rc += 'l';
 			break;
 		}
 	}
-	return backtrack;
+	return rc;
 
 }
