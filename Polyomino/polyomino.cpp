@@ -4,54 +4,60 @@
 #include <iomanip>
 #include<set>
 
-bool isBoundaryWord(string s)
+Polyomino::Polyomino(string bw)
 {
-	if (!collision(s) && clockwise(s) && circularWord(s))
+	boundaryWord = bw;
+	wordLength = bw.length();
+}
+
+bool Polyomino::isBoundaryWord()
+{
+	if (!collision() && clockwise() && circularWord())
 		return true;
 
 	else
 		return false;
 }
 
-bool tiles(string s)
+bool Polyomino::tiles()
 {
 	//for every possible six locations
 	//iterate over all possible choices of 6 position
-	string str = s + s;
-	int strlen =(int)s.length();
+	string str = boundaryWord + boundaryWord;
+
 	int posA = 0, lenA = 1, lenB = 1;
 	int posB, posC;
 	string A, B, C;
 
 	//Iterate over all possible positions of factorizations A, B, and C
-	for (posA = 0; posA < strlen/2; posA++)
+	for (posA = 0; posA < wordLength/2; posA++)
 	{
-		for(lenA = 1; lenA < strlen/2; lenA++)
+		for(lenA = 1; lenA < wordLength/2; lenA++)
 		{
 			A = str.substr(posA, lenA);
 //			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
-//				<< "Acomp: " << str.substr(posA + strlen / 2, lenA) << endl;
-			if(reverseComplement(A) == str.substr(posA + strlen/2, lenA))
+//				<< "Acomp: " << str.substr(posA + wordLength / 2, lenA) << endl;
+			if(reverseComplement(A) == str.substr(posA + wordLength/2, lenA))
 			{
 //				cout << endl;
 
-				for(lenB = 1; lenA + lenB <= strlen/2; lenB++)
+				for(lenB = 1; lenA + lenB <= wordLength/2; lenB++)
 				{
 					posB = posA + lenA;
 					B = str.substr(posB, lenB);
 //					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
-//						<< "Bcomp: " << str.substr(posB + strlen / 2, lenB) << endl;
-					if(reverseComplement(B) == str.substr(posB + strlen/2, lenB))
+//						<< "Bcomp: " << str.substr(posB + wordLength / 2, lenB) << endl;
+					if(reverseComplement(B) == str.substr(posB + wordLength/2, lenB))
 					{
-						if (lenA + lenB == strlen)
+						if (lenA + lenB == wordLength)
 							return true;
 						else {
 //							cout << endl;
 							posC = posB + lenB;
-							C = str.substr(posC, strlen / 2 - (lenB + lenA));
+							C = str.substr(posC, wordLength / 2 - (lenB + lenA));
 //							cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
-//								<< "Ccomp: " << str.substr(posC + strlen / 2, lenB) << endl;
-							if (reverseComplement(C) == str.substr(posC + strlen / 2, strlen / 2 - (lenB + lenA)))
+//								<< "Ccomp: " << str.substr(posC + wordLength / 2, lenB) << endl;
+							if (reverseComplement(C) == str.substr(posC + wordLength / 2, wordLength / 2 - (lenB + lenA)))
 								return true;
 //							cout << endl;
 						}
@@ -65,13 +71,13 @@ bool tiles(string s)
 }
 
 //Test if the path ends where it started
-bool circularWord(string s)
+bool Polyomino::circularWord()
 {
 	int up, down, left, right;
 	up = down = left = right = 0;
-	for (size_t i = 0; i < s.length(); i++)
+	for (int i = 0; i < wordLength; i++)
 	{
-		switch (s.at(i))
+		switch (boundaryWord.at(i))
 		{
 			case 'u':
 				up++;
@@ -98,20 +104,20 @@ bool circularWord(string s)
 
 //Counts the number of clockwise and counter clockwise turns to
 //determine if path traversal is clockwise
-bool clockwise(string s)
+bool Polyomino::clockwise()
 {
 	char current, next;
 	int cw = 0, ccw = 0;
 
-	for (size_t i = 0; i < s.length(); i++)
+	for (int i = 0; i < wordLength; i++)
 	{
-		current = s.at(i);
+		current = boundaryWord.at(i);
 		
-		if (i == s.length() - 1)
-			next = s.at(0);
+		if (i == wordLength - 1)
+			next = boundaryWord.at(0);
 		
 		else
-			next = s.at(i + 1);
+			next = boundaryWord.at(i + 1);
 
 		switch (current)
 		{
@@ -153,9 +159,9 @@ bool clockwise(string s)
 }
 
 //Returns true if the boundary word loops back on itself
-bool collision(string s)
+bool Polyomino::collision()
 {
-	int x = 0, y = 0, mul = 100;
+	int x = 0, y = 0, mul = wordLength;
 	
 	set<int> coordinates;
 
@@ -164,9 +170,9 @@ bool collision(string s)
 									//(1,0) -> 100 and (0,1) -> 1
 									//Fails if y coordinate reaches +-mul
 
-	for (size_t i = 0; i < s.length() - 1; i++)
+	for (size_t i = 0; i < wordLength - 1; i++)
 	{
-		switch (s.at(i))
+		switch (boundaryWord.at(i))
 		{
 			case 'u':
 				y++;
@@ -195,7 +201,61 @@ bool collision(string s)
 	return false;
 }
 
-string reverseComplement(string s)
+//Checks for collisions with radix sort
+//bool Polyomino::collision(string s)
+//{
+//
+//	
+//	int x = 0, y = 0;
+//	int minX = x, minY = y;
+//	int maxX = x, maxY = y;
+//
+//	coordinate* coord = new coordinate[s.length()];
+//	
+//	for (int i = 0; i < s.length(); i++)
+//	{
+//
+//		switch (s.at(i))
+//			{
+//			case 'u':
+//				y--;
+//				break;
+//
+//			case 'd':
+//				y++;
+//				break;
+//
+//			case 'l':
+//				x--;
+//				break;
+//
+//			case 'r':
+//				x++;
+//				break;
+//			}
+//
+//		if (x < minX)
+//			minX = x;
+//		if (x > maxX)
+//			maxX = x;
+//		if (y < minY)
+//			minY = y;
+//		if (x > maxY)
+//			maxY = y;
+//
+//		coord[i].x = x;
+//		coord[i].y = y;
+//	}
+//
+//	//Sort coordinate array by  x, then y
+//
+//}
+
+void Polyomino::radixSort(int **arr)
+{
+
+}
+string Polyomino::reverseComplement(string s)
 {
 	string rc = "";
 
