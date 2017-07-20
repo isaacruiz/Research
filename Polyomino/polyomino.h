@@ -21,15 +21,14 @@ class Polyomino
 	private:
 		//returns the reverse complement
 		string reverseComplement(string s);
-		void radixSort(int **arr);
-		
+		void sortCoordinates();
 		struct coordinate
 		{
 			int x, y;
 		};
-
+		coordinate* coordinates;
 		string boundaryWord;
-		int maxX, maxY, wordLength;
+		int minX, maxX, minY, maxY, wordLength;
 
 };
 #endif

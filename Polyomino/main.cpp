@@ -14,37 +14,35 @@ inline void _test(const char* expression, const char* file, int line)
 int main()
 {
 	string bw;
-	//
-	///*
 	//Boundary 1
 	//┌─┐
 	//└─┘
 	//*/
 
-	Polyomino p1("rdlu");
-	test(p1.circularWord());
-	test(!p1.collision());
-	test(p1.clockwise());
-	test(p1.tiles());
+	//Polyomino p1("rdlu");
+	//test(p1.circularWord());
+	//test(!p1.collision());
+	//test(p1.clockwise());
+	//test(p1.tiles());
 
-	//Backtrack of Boundary 1
-	Polyomino p2("drul");
-	test(p2.circularWord());
-	test(!p2.collision());
-	test(!p2.clockwise());
+	////Backtrack of Boundary 1
+	//Polyomino p2("drul");
+	//test(p2.circularWord());
+	//test(!p2.collision());
+	//test(!p2.clockwise());
 
-	//Shift of Boundary 1
-	Polyomino p3("dlur");
-	test(p3.circularWord());
-	test(!p3.collision());
-	test(p3.clockwise());
-	//test(tiles());
+	////Shift of Boundary 1
+	//Polyomino p3("dlur");
+	//test(p3.circularWord());
+	//test(!p3.collision());
+	//test(p3.clockwise());
+	////test(tiles());
 
-	//Backtrack of shift of Boundary 1
-	Polyomino p4("ruld");
-	test(p4.circularWord());
-	test(!p4.collision());
-	test(!p4.clockwise());
+	////Backtrack of shift of Boundary 1
+	//Polyomino p4("ruld");
+	//test(p4.circularWord());
+	//test(!p4.collision());
+	//test(!p4.clockwise());
 
 
 	/*
