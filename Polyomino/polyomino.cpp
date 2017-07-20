@@ -23,34 +23,38 @@ bool tiles(string s)
 	int posB, posC;
 	string A, B, C;
 
-	//Iterate over all possible positions of A
+	//Iterate over all possible positions of factorizations A, B, and C
 	for (posA = 0; posA < strlen/2; posA++)
 	{
 		for(lenA = 1; lenA < strlen/2; lenA++)
 		{
 			A = str.substr(posA, lenA);
-			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
-				<< "Acomp: " << str.substr(posA + strlen / 2, lenA) << endl;
+//			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
+//				<< "Acomp: " << str.substr(posA + strlen / 2, lenA) << endl;
 			if(reverseComplement(A) == str.substr(posA + strlen/2, lenA))
 			{
-				cout << endl;
+//				cout << endl;
 
-				for(lenB = 1; lenA + lenB < strlen/2; lenB++)
+				for(lenB = 1; lenA + lenB <= strlen/2; lenB++)
 				{
 					posB = posA + lenA;
 					B = str.substr(posB, lenB);
-					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
-						<< "Bcomp: " << str.substr(posB + strlen / 2, lenB) << endl;
+//					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
+//						<< "Bcomp: " << str.substr(posB + strlen / 2, lenB) << endl;
 					if(reverseComplement(B) == str.substr(posB + strlen/2, lenB))
 					{
-						cout << endl;
-						posC = posB + lenB;
-						C = str.substr(posC, strlen/2 - lenB);
-						cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
-							<< "Ccomp: " << str.substr(posC + strlen / 2, lenB) << endl;
-						if(reverseComplement(C) == str.substr(posC + strlen/2, strlen/2 - lenB))
+						if (lenA + lenB == strlen)
 							return true;
-						cout << endl;
+						else {
+//							cout << endl;
+							posC = posB + lenB;
+							C = str.substr(posC, strlen / 2 - (lenB + lenA));
+//							cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
+//								<< "Ccomp: " << str.substr(posC + strlen / 2, lenB) << endl;
+							if (reverseComplement(C) == str.substr(posC + strlen / 2, strlen / 2 - (lenB + lenA)))
+								return true;
+//							cout << endl;
+						}
 					}
 				}
 			}

@@ -24,7 +24,7 @@ int main()
 	test(circularWord(bw));
 	test(!collision(bw));
 	test(clockwise(bw));
-	//test(tiles(bw));
+	test(tiles(bw));
 
 	//Backtrack of Boundary 1
 	bw = "drul"; 
@@ -110,7 +110,7 @@ int main()
 	test(!collision(bw));
 	test(clockwise(bw));
 	test(isBoundaryWord(bw));
-	//test(tiles(bw));  //tiles method doesn't seem to work with polyominos that have a zero length factorization
+	test(tiles(bw));
 
 	/*
 	Boundary 6
