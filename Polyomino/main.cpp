@@ -95,6 +95,7 @@ int main()
 	test(p10.clockwise());
 	test(!p10.tiles());
 	
+
 	/*
 	Boundary 5
         ┌────┐
@@ -114,10 +115,10 @@ int main()
 
 	/*
 	Boundary 6
-      ┌─┐ ┌─┐
-	┌─┘ └─┘ │   
-	└─┐ ┌─┐ │
-      └─┘ └─┘
+          ┌─┐ ┌─┐
+        ┌─┘ └─┘ │   
+        └─┐ ┌─┐ │
+          └─┘ └─┘
 	*/
 	Polyomino p12("ururdrurdddluldlul");
 	test(p12.circularWord());
