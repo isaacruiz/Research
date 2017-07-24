@@ -18,7 +18,7 @@ int main()
 	//┌─┐
 	//└─┘
 	//*/
-
+	//Add tests for long words
 	//Polyomino p1("rdlu");
 	//test(p1.circularWord());
 	//test(!p1.collision());
