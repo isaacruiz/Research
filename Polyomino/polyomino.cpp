@@ -1,13 +1,20 @@
 ﻿#include "polyomino.h"
-#include <map>
-#include <iostream>
-#include <iomanip>
-#include <set>
 
 Polyomino::Polyomino(string bw)
 {
 	boundaryWord = bw;
 	wordLength = bw.length();
+	setCoordinates();
+	
+}
+
+Polyomino::~Polyomino()
+{
+	delete[] coordinates;
+}
+
+void Polyomino::setCoordinates()
+{
 	coordinates = new coordinate[wordLength];
 
 	//Initialize coordinate array
@@ -46,13 +53,6 @@ Polyomino::Polyomino(string bw)
 		coordinates[i].x = x;
 		coordinates[i].y = y;
 	}
-	//cout << "Max X: " << maxX << " Min X: " << minX << endl;
-	//cout << "Max Y: " << maxY << " Min Y: " << minY << endl;
-}
-
-Polyomino::~Polyomino()
-{
-	delete[] coordinates;
 }
 bool Polyomino::isBoundaryWord()
 {
@@ -344,5 +344,22 @@ string Polyomino::reverseComplement(string s)
 		}
 	}
 	return rc;
+}
 
+void Polyomino::scale(int n)
+{
+	size_t i = 0;
+	int j, k;
+	while (i < boundaryWord.length())
+	{
+		boundaryWord.insert(i, n - 1, boundaryWord.at(i));
+		i += n;
+	}
+	j = rand() % boundaryWord.length();
+	k = boundaryWord.length() - j;
+	
+	boundaryWord = boundaryWord.substr(j, k) + boundaryWord.substr(0, j); //makes boundary word start at random point
+	wordLength = boundaryWord.length();
+	delete[] coordinates;
+	setCoordinates();
 }

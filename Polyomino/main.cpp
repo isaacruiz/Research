@@ -1,19 +1,14 @@
-﻿#include <iostream>
-#include <stdlib.h>
-#include "polyomino.h"
+﻿#include "polyomino.h"
 
 inline void _test(const char* expression, const char* file, int line)
 {
-	cerr << "test(" << expression << ") failed in file " << file;
-	cerr << ", line " << line << "." << endl;
+	cerr << "test(" << expression << ") failed in file " << file << ", line " << line << "." << endl;
 	abort();
 }
-
 #define test(EXPRESSION) ((EXPRESSION) ? (void)0 : _test(#EXPRESSION, __FILE__, __LINE__))
 
 int main()
 {
-	string bw;
 	/*
 	Boundary 1
 	┌─┐
@@ -45,15 +40,14 @@ int main()
 	test(!p4.collision());
 	test(!p4.clockwise());
 
-
 	/*
-	Boundary 2
-	  ┌─┐
-	  │ └───┐
-	┌─┘     └─┐
-	└─┐ ┌─┐ ┌─┘
-	  └─┘ └─┘
-	*/
+	//Boundary 2
+	//  ┌─┐
+	//  │ └───┐
+	//┌─┘     └─┐
+	//└─┐ ┌─┐ ┌─┘
+	//  └─┘ └─┘
+	//*/
 	Polyomino p5("rdrrdrdldluldluluruu");  //Tiles by translation
 	test(p5.circularWord());
 	test(!p5.collision());
@@ -79,6 +73,7 @@ int main()
 	│ └─┼─┘
 	└───┘
 	*/
+
 	Polyomino p9("rdrrulddlluu");
 	test(p9.circularWord());
 	test(p9.collision());
@@ -95,7 +90,6 @@ int main()
 	test(!p10.collision());
 	test(p10.clockwise());
 	test(!p10.tiles());
-	
 
 	/*
 	Boundary 5
@@ -128,6 +122,33 @@ int main()
 	test(p12.isBoundaryWord());
 	test(p12.tiles());
 	
+
+	////Timing tests
+	clock_t start;
+	clock_t end;
+	double duration;
+	const int N = 100000;
+	Polyomino* p[N];
+
+
+	for (int i = 0; i < N; i++)
+	{
+		
+		p[i] = new Polyomino("rdrrdrdldluldluluruu");
+		p[i]->scale(10);
+	}
+	
+	for (int i = 0; i < N; i++)
+	{
+		start = clock();
+		p[i]->tiles();
+		end = clock();
+		duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+		cout << duration << "\tseconds\n";
+	}
+	
+
+
 	cout << "Tests completed" << endl;
 
 	return 0;

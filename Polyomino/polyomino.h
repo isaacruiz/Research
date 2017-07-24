@@ -2,6 +2,10 @@
 #define POLYOMINO_H
 
 #include <string>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
 
 using namespace std;
 
@@ -13,6 +17,7 @@ class Polyomino
 		~Polyomino();
 		bool isBoundaryWord();
 		bool tiles();
+		void scale(int n);
 
 		//Helper functions
 		bool circularWord();
@@ -23,6 +28,8 @@ class Polyomino
 		//returns the reverse complement
 		string reverseComplement(string s);
 		void sortCoordinates();
+	
+		void setCoordinates();
 		struct coordinate
 		{
 			int x, y;
