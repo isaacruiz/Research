@@ -127,21 +127,22 @@ int main()
 	clock_t start;
 	clock_t end;
 	double duration;
-	const int N = 100000;
-	Polyomino* p[N];
+	const int COUNT = 1000;
+	int factor = 20;
+	Polyomino* p[COUNT];
 
 
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < COUNT; i++)
 	{
 		
 		p[i] = new Polyomino("rdrrdrdldluldluluruu");
-		p[i]->scale(10);
+		p[i]->scale(factor); //Scales boundary word by argument and randomizes the start point
 	}
 	
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < COUNT; i++)
 	{
 		start = clock();
-		p[i]->tiles();
+		test(p[i]->tiles());
 		end = clock();
 		duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 		cout << duration << "\tseconds\n";

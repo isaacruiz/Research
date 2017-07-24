@@ -264,7 +264,7 @@ void Polyomino::sortCoordinates()
 {
 	//Sort coordinate array by  y, then x
 	int range;
-	int* shift;
+	int* offset;
 	int* counter;
 	int n;
 
@@ -273,17 +273,17 @@ void Polyomino::sortCoordinates()
 	//Shifts array indexes to account for negative numbers
 	range = maxY - minY;
 	counter = new int[range + 1]();
-	shift = &counter[0 - minY];
+	offset = &counter[0 - minY];
 
 	for (int i = 0; i < wordLength; i++)
-		shift[coordinates[i].y]++;
+		offset[coordinates[i].y]++;
 
 	for (int i = 1; i < range + 1; i++)
 		counter[i] = counter[i] + counter[i - 1];
 
 	for (int i = wordLength - 1; i >= 0; i--)
 	{
-		n = --shift[coordinates[i].y];
+		n = --offset[coordinates[i].y];
 		tempCoord[n] = coordinates[i];
 	}
 
@@ -298,17 +298,17 @@ void Polyomino::sortCoordinates()
 	//Shifts array indexes to account for negative numbers
 	range = maxX - minX;
 	counter = new int[range + 1]();
-	shift = &counter[0 - minX];
+	offset = &counter[0 - minX];
 
 	for (int i = 0; i < wordLength; i++)
-		shift[coordinates[i].x]++;
+		offset[coordinates[i].x]++;
 
 	for (int i = 1; i < range + 1; i++)
 		counter[i] = counter[i] + counter[i - 1];
 
 	for (int i = wordLength - 1; i >= 0; i--)
 	{
-		n = --shift[coordinates[i].x];
+		n = --offset[coordinates[i].x];
 		tempCoord[n] = coordinates[i];
 	}
 
