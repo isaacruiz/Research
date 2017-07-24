@@ -50,6 +50,10 @@ Polyomino::Polyomino(string bw)
 	//cout << "Max Y: " << maxY << " Min Y: " << minY << endl;
 }
 
+Polyomino::~Polyomino()
+{
+	delete[] coordinates;
+}
 bool Polyomino::isBoundaryWord()
 {
 	if (!collision() && clockwise() && circularWord())
@@ -245,6 +249,12 @@ bool Polyomino::clockwise()
 bool Polyomino::collision()
 {
 	sortCoordinates();
+	for (int i = 0; i < wordLength - 1; i++)
+	{
+		if (coordinates[i].y == coordinates[i + 1].y && coordinates[i].x == coordinates[i + 1].x)
+				return true;
+	}
+
 	return false;
 }
 
@@ -255,29 +265,21 @@ void Polyomino::sortCoordinates()
 	//Sort coordinate array by  y, then x
 	int range;
 	int* shift;
-	int* temp;
+	int* counter;
 	int n;
 
 	coordinate* tempCoord = new coordinate[wordLength];
 
 	//Shifts array indexes to account for negative numbers
 	range = maxY - minY;
-	temp = new int[range + 1]();
-	shift = &temp[0 - minY];
+	counter = new int[range + 1]();
+	shift = &counter[0 - minY];
 
 	for (int i = 0; i < wordLength; i++)
 		shift[coordinates[i].y]++;
 
-	//for (int i = 0; i < range + 1; i++)
-	//	cout << temp[i] << " ";
-	//cout << endl;
-
 	for (int i = 1; i < range + 1; i++)
-		temp[i] = temp[i] + temp[i - 1];
-
-	//for (int i = 0; i < range + 1; i++)
-	//	cout << temp[i] << " ";
-	//cout << endl;
+		counter[i] = counter[i] + counter[i - 1];
 
 	for (int i = wordLength - 1; i >= 0; i--)
 	{
@@ -285,36 +287,24 @@ void Polyomino::sortCoordinates()
 		tempCoord[n] = coordinates[i];
 	}
 
-	for (int i = 0; i < wordLength; i++)
-		cout << tempCoord[i].y << " ";
-	cout << endl;
-	
-	delete [] coordinates;
-	coordinates = tempCoord;
-	
-	for (int i = 0; i < wordLength; i++)
-		cout << coordinates[i].y << " ";
-	
-	cout << endl;
-	//Sort by X values
-	range = maxX - minX;
-	shift = &temp[0 - minX];
+	delete[] coordinates;
+	delete[] counter;
 
+	coordinates = tempCoord;
+
+	//Sort by X coordinate
 	tempCoord = new coordinate[wordLength];
-	
+
+	//Shifts array indexes to account for negative numbers
+	range = maxX - minX;
+	counter = new int[range + 1]();
+	shift = &counter[0 - minX];
+
 	for (int i = 0; i < wordLength; i++)
 		shift[coordinates[i].x]++;
 
-	//for (int i = 0; i < range + 1; i++)
-	//	cout << temp[i] << " ";
-	//cout << endl;
-
 	for (int i = 1; i < range + 1; i++)
-		temp[i] = temp[i] + temp[i - 1];
-
-	//for (int i = 0; i < range + 1; i++)
-	//	cout << temp[i] << " ";
-	//cout << endl;
+		counter[i] = counter[i] + counter[i - 1];
 
 	for (int i = wordLength - 1; i >= 0; i--)
 	{
@@ -322,9 +312,10 @@ void Polyomino::sortCoordinates()
 		tempCoord[n] = coordinates[i];
 	}
 
-	for (int i = 0; i < wordLength; i++)
-		cout << tempCoord[i].x << " ";
-	cout << endl;
+	delete[] coordinates;
+	delete[] counter;
+
+	coordinates = tempCoord;
 }
 
 string Polyomino::reverseComplement(string s)

@@ -10,6 +10,7 @@ class Polyomino
 	public:
 		
 		Polyomino(string bw);
+		~Polyomino();
 		bool isBoundaryWord();
 		bool tiles();
 
