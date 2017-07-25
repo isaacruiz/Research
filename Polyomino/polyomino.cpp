@@ -363,3 +363,16 @@ void Polyomino::scale(int n)
 	delete[] coordinates;
 	setCoordinates();
 }
+
+void Polyomino::print()
+{
+	int col = maxX - minX;
+	int row = maxY - minY;
+
+	string corner[] = { "┌","┐","└", "┘", "┌","┐","└", "┘" };
+	string bar[] = { "─","│" };
+	string intersection[] = { "┼", "┤", "├", "┴", "┬"};
+	string** board = new string*[col];
+	string** offset;
+
+}

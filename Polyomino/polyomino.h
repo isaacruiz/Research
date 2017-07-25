@@ -18,7 +18,7 @@ class Polyomino
 		bool isBoundaryWord();
 		bool tiles();
 		void scale(int n);
-
+		void print();
 		//Helper functions
 		bool circularWord();
 		bool clockwise();

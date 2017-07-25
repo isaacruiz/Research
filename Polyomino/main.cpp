@@ -20,7 +20,7 @@ int main()
 	test(!p1.collision());
 	test(p1.clockwise());
 	test(p1.tiles());
-
+	p1.print();
 	//Backtrack of Boundary 1
 	Polyomino p2("drul");
 	test(p2.circularWord());
@@ -53,7 +53,7 @@ int main()
 	test(!p5.collision());
 	test(p5.clockwise());
 	test(p5.tiles());
-
+	p5.print();
 	Polyomino p6("rdrrdrdldluldluluruuu");  //Boundary 2 with extra character at end
 	//test(p6.collision());  //Does not test true with sorted coordinate algorithm
 	test(!p6.circularWord());
@@ -128,13 +128,12 @@ int main()
 	clock_t end;
 	double duration;
 	const int COUNT = 1000;
-	int factor = 20;
+	int factor = 25;
 	Polyomino* p[COUNT];
 
 
 	for (int i = 0; i < COUNT; i++)
 	{
-		
 		p[i] = new Polyomino("rdrrdrdldluldluluruu");
 		p[i]->scale(factor); //Scales boundary word by argument and randomizes the start point
 	}
@@ -151,6 +150,9 @@ int main()
 
 
 	cout << "Tests completed" << endl;
+
+	for (int i = 0; i < COUNT; i++)
+		delete p[i];
 
 	return 0;
 }
