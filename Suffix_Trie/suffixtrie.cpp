@@ -5,13 +5,15 @@ using namespace std;
 SuffixTrie::SuffixTrie(string s)
 {
 	int curDepth = 0;
-	//longComExt = new string[capacity]; //Hold up to 5 LCEs
 	string suffix;
 	Node* cur;
-	str = s;
+	string revComp, rev, comp;
+	rev = reverse_string(s);
+	comp = complement_string(s);
+	revComp = reverse_string(comp);
+	str = s + s + '!' + revComp + revComp + '@' + rev + rev + '#' + comp + comp + '$';
 
 	root = new Node(NULL, curDepth);
-	//depthLCA = 0;
 	
 	//Loop counter
 	unsigned int i = 0;
@@ -24,15 +26,25 @@ SuffixTrie::SuffixTrie(string s)
 	{ 
 		curDepth = 1;
 		cur = root;
-		suffix = s.substr(j, str.length() - j);
+		suffix = str.substr(j, str.length() - j);
 		//inner loop adds current suffix to trie
 		for (i = 0; i < suffix.length(); i++)
 		{
-			arrIndex = suffix.at(i) - 97; //map lowercase chars to array indexes
-			if (suffix.at(i) == '$')
-				arrIndex = 26;
+			
+			//arrIndex = suffix.at(i) - 97; //map lowercase chars to array indexes
+			//
+			//if (suffix.at(i) == '$')
+			//	arrIndex = 26;
 
-			//arrIndex = arrayIndex(suffix.at(i));  //maps character to one of 5 indicies
+			//Modified for strings defining polyominoes
+			arrIndex = char_to_index(suffix.at(i));
+			if (arrIndex == -1)
+			{
+				cout << "Error: invalid input";
+				return;
+			}
+
+
 
 			//if there is no node at array index, add a new node
 			if (cur->child[arrIndex] == 0)
@@ -44,8 +56,6 @@ SuffixTrie::SuffixTrie(string s)
 		//Delete this if not needed
 		cur->isWord = true; //Set that the last node created completes the added word
 	}
-	//depthLowestComAncestor(root);
-	//longestComExt(root, "");
 }
 
 SuffixTrie :: ~SuffixTrie()
@@ -78,6 +88,7 @@ int SuffixTrie::size()
 
 int SuffixTrie::size_recursion(Node* cur)
 {
+	//Modify this to account for strings of multiple versions of boundary word truncated on each other---------------------------------------------------
 	//Base case
 	if (cur == 0)
 		return 0;
@@ -107,10 +118,11 @@ bool SuffixTrie::contains(string s)
 
 	while (i < s.length() && cur != 0)
 	{
-		//arrIndex = arrayIndex(s.at(i));
-		arrIndex = s.at(i) - 97;
+		/*arrIndex = s.at(i) - 97;
 		if (s.at(i) == '$')
-			arrIndex = 26;
+			arrIndex = 26;*/
+
+		arrIndex = char_to_index(s.at(i));
 
 		//if the array element for the current character is empty,
 		//then the word is not in the trie
@@ -163,15 +175,20 @@ int SuffixTrie::LCE_recursive(Node* cur, int i, int j)
 	int index1;
 	int index2;
 
-	index1 = str.at(i) - 97;
+	/*index1 = str.at(i) - 97;
 	index2 = str.at(j) - 97;
 
 	if (str.at(i) == '$')
 		index1 = 26;
 
 	if (str.at(j) == '$')
-		index2 = 26;
+		index2 = 26;*/
 
+	index1 = char_to_index(str.at(i));
+	index2 = char_to_index(str.at(j));
+
+	//cout << "char at " << i << " is " << str.at(i) << " and is mapped to index " << index1 << endl;
+	//cout << "char at " << j << " is " << str.at(j) << " and is mapped to index " << index2 << endl;
 	if (cur->child[index1] != cur->child[index2])
 		return 0;
 
@@ -203,3 +220,97 @@ void SuffixTrie::print_recursive(Node* cur)
 		}
 }
 
+int SuffixTrie::char_to_index(char c)
+{
+	c = tolower(c);
+
+	int index;
+	switch (c)
+	{
+		case 'n':
+		case 'u':
+			index = 0;
+			break;
+
+		case 's':
+		case 'd':
+			index = 1;
+			break;
+
+		case 'e':
+		case 'r':
+			index = 2;
+			break;
+
+		case 'w':
+		case 'l':
+			index = 3;
+			break;
+
+		case '!':
+			index = 4;
+			break;
+
+		case '@':
+			index = 5;
+			break;
+
+		case '#':
+			index = 6;
+			break;
+
+		case  '$':
+			index = 7;
+			break;
+
+		default:
+			index = -1;
+	}
+
+	return index;
+}
+
+string SuffixTrie::reverse_string(string s)
+{
+	char temp;
+	unsigned int i, j;
+	for (i = 0; i < s.length()/2; i++)
+	{
+		j = s.length() - 1 - i;
+		temp = s[i];
+		s[i] = s[j];
+		s[j] = temp;
+	}
+	return s;
+}
+
+string SuffixTrie::complement_string(string s)
+{
+	for (unsigned int i = 0; i < s.length(); i++)
+	{
+		s[i] = complement(s[i]);
+	}
+	return s;
+}
+
+char SuffixTrie::complement(char c)
+{
+	switch (c)
+	{
+	case 'n':
+	case 'u':
+		return 's';
+
+	case 's':
+	case 'd':
+		return 'n';
+	
+	case 'e':
+	case 'r':
+		return 'w';
+
+	case 'w':
+	case 'l':
+		return 'e';
+	}
+}

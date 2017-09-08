@@ -29,15 +29,21 @@ class SuffixTrie
 		// at indices i and j. 
 		int LCE(int i, int j);
 		
+		string reverse_string(string s);
+		string complement_string(string s);
+		string str;
 	private:
 		// Recursive calls for public methods
 		int size_recursion(Node* root);
 		int LCE_recursive(Node* cur, int i, int j);
 		void print_recursive(Node* root);
 		void delete_tree(Node* root);
+		int char_to_index(char c);
+		char complement(char c);
+	
 
 		Node* root;
-		string str;
+		
 };
 
 #endif

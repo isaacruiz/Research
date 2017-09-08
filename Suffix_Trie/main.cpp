@@ -14,6 +14,7 @@ using namespace std;
 
 int main() 
 {
+	/*
 	SuffixTrie st1("banana$");
 
 	test(st1.size() == 7);
@@ -101,7 +102,16 @@ int main()
 	test(st3.LCE(0, 15) == -1);
 	test(st3.LCE(-1, 2) == -1);
 	test(st3.LCE(0, 20) == -1);
+
 	cout << "Test completed." << endl;
+	return 0;
+	*/
+
+	SuffixTrie st("neeneewswene");
+	test(st.LCE(0, 3) == 3);
+	test(st.LCE(-1, 2) == -1);
+	test(st.LCE(6, 9) == 0);
+
 	return 0;
 }
 
