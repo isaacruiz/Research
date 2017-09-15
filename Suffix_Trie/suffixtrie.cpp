@@ -7,11 +7,8 @@ SuffixTrie::SuffixTrie(string s)
 	int curDepth = 0;
 	string suffix;
 	Node* cur;
-	string revComp, rev, comp;
-	rev = reverse_string(s);
-	comp = complement_string(s);
-	revComp = reverse_string(comp);
-	str = s + s + '!' + revComp + revComp + '@' + rev + rev + '#' + comp + comp + '$';
+
+	str = s;
 
 	root = new Node(NULL, curDepth);
 	

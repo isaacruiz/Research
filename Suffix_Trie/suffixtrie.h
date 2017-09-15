@@ -1,6 +1,6 @@
 #include "node.h"
 #include <string>
-
+#include "../Polyomino/admissible_factor.h"
 #ifndef SUFFIXTRIE_H
 #define SUFFIXTRIE_H
 
@@ -41,7 +41,6 @@ class SuffixTrie
 		int char_to_index(char c);
 		char complement(char c);
 	
-
 		Node* root;
 		
 };

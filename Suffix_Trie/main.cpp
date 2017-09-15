@@ -1,5 +1,6 @@
 #include <iostream>
 #include "suffixtrie.h"
+#include "../Polyomino/polyomino.h"
 
 inline void _test(const char* expression, const char* file, int line)
 {
@@ -106,7 +107,7 @@ int main()
 	cout << "Test completed." << endl;
 	return 0;
 	*/
-
+	Polyomino p("neeneewswene");
 	SuffixTrie st("neeneewswene");
 	test(st.LCE(0, 3) == 3);
 	test(st.LCE(-1, 2) == -1);
