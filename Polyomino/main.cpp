@@ -101,7 +101,7 @@ int main()
  //       │ ┌──┘
  //       └─┘
 	//*/
-	//Polyomino p11("rrddrurddrdllldldluullurrruluu");  //Has 2 zero length BN factorizations
+	//Polyomino p11("eessenesseswwwswswnnwwneeenwnn");  //Has 2 zero length BN factorizations
 	//test(p11.circularWord());
 	//test(!p11.collision());
 	//test(p11.clockwise());
@@ -156,15 +156,34 @@ int main()
 	//for (int i = 0; i < COUNT; i++)
 	//	delete p[i];
 	
-	Polyomino p("neseeseswswnwswnwnen");
-	p.sortFactors();
-	p.printFactors();
-	test(p.tiles());
 
-	Polyomino p2("nenesenessswnwswnw");
-	p.printFactors();
-	test(p2.tiles());
+	cout << "Factors for boundary word nesw:\n";
+	Polyomino b1("nesw");
+	cout << "Boundary word length: " << b1.boundaryLength << endl;
+	b1.sortFactors();
+	b1.printFactors();
+	test(b1.tiles());
 
-	cout << "Test completed" << endl;
+	cout << "\nFactors for boundary word neseeseswswnwswnwnen:\n";
+	Polyomino b2("neseeseswswnwswnwnen");
+	cout << "Boundary word length: " << b2.boundaryLength << endl;
+	b2.sortFactors();
+	b2.printFactors();
+	test(b2.tiles());
+
+	Polyomino b3("nenesenessswnwswnw");
+	cout << "\nFactors for boundary word nenesenessswnwswnw:\n";
+	cout << "Boundary word length: " << b3.boundaryLength << endl;
+	b3.printFactors();
+	test(b3.tiles());
+	
+	
+	Polyomino b4("eessenesseswwwswswnnwwneeenwnn");
+	cout << "\nFactors for boundary word eessenesseswwwswswnnwwneeenwnn:\n";
+	cout << "Boundary word length: " << b4.boundaryLength << endl;
+	b4.printFactors();
+	test(b4.tiles());
+
+	cout << "\nTest completed" << endl;
 	return 0;
 }

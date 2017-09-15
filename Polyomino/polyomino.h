@@ -36,7 +36,7 @@ class Polyomino
 		SuffixTrie* st;
 		vector <AdmissibleFactor> A;
 		vector <vector <AdmissibleFactor>> factorArray;
-
+		int boundaryLength;
 	private:
 		//returns the reverse complement
 		string reverseComplement(string s);
@@ -49,7 +49,7 @@ class Polyomino
 		};
 		coordinate* coordinates;
 		string boundaryWord;
-		int minX, maxX, minY, maxY, boundaryLength;
+		int minX, maxX, minY, maxY;
 
 };
 #endif
