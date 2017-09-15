@@ -7,7 +7,14 @@ Polyomino::Polyomino(string bw)
 	setCoordinates();
 	boundString = bw + bw + reverseComplement(bw) + reverseComplement(bw);
 	st = new SuffixTrie(boundString);
+	
+	factorArray.resize(boundaryLength);
+	for (int i = 0; i < boundaryLength; i++)
+	{
+		factorArray[i].resize(5);
+	}
 	getFactors();
+	sortFactors();
 }
 
 Polyomino::~Polyomino()
@@ -425,11 +432,12 @@ void Polyomino::getFactors()
 			a.start = start % boundaryLength;
 			a.end = end % boundaryLength;
 			a.length = end - start + 1;
+			a.factor = boundString.substr(start, a.length);
 
 			a_hat.start = (a.start + boundaryLength/2) % boundaryLength;
 			a_hat.end = (a.end + boundaryLength/2) % boundaryLength;
 			a_hat.length = a.length;
-			
+			a_hat.factor = boundString.substr(a_hat.start, a_hat.length);
 			A.push_back(a);
 			A.push_back(a_hat);
 		}
@@ -446,7 +454,7 @@ void Polyomino::sortFactors()
 		counter[temp[i].length]++;
 	}
 
-	for (unsigned int i = 1; i < boundaryLength; i++)
+	for (int i = 1; i < boundaryLength; i++)
 	{
 		counter[i] += counter[i - 1];
 	}
@@ -457,7 +465,7 @@ void Polyomino::sortFactors()
 		A[counter[temp[i].length]] = temp[i];
 	}
 
-	for (unsigned int i = 0; i < boundaryLength; i++)
+	for (int i = 0; i < boundaryLength; i++)
 	{
 		counter[i] = 0;
 	}
@@ -469,7 +477,7 @@ void Polyomino::sortFactors()
 		counter[temp[i].start]++;
 	}
 
-	for (unsigned int i = 1; i < boundaryLength; i++)
+	for (int i = 1; i < boundaryLength; i++)
 	{
 		counter[i] += counter[i - 1];
 	}
@@ -478,6 +486,7 @@ void Polyomino::sortFactors()
 	{
 		counter[temp[i].start]--;
 		A[counter[temp[i].start]] = temp[i];
+		factorArray[temp[i].start].push_back(temp[i]);
 	}
 
 
@@ -490,6 +499,17 @@ void Polyomino::printFactors()
 {
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
-		cout << "Start-End: " << A[i].start << "-" << A[i].end << " Length: " << A[i].length << endl;
+		cout << "Start-End: " << A[i].start << "-" << A[i].end << " Length: " << A[i].length << "  " << A[i].factor << endl;
+	}
+}
+
+void Polyomino::printFactorArray()
+{
+	for (unsigned int i = 0; i < factorArray.size(); i++)
+	{
+		for (unsigned int j = 0; j < factorArray[i].size(); j++)
+		{
+			cout << "Start: " << factorArray[i][j].start << " End: " << factorArray[i][j].end << " Length: " << factorArray[i][j].length << "  " << factorArray[i][j].factor << endl;
+		}
 	}
 }

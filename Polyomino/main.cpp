@@ -15,14 +15,14 @@ int main()
 	//└─┘
 	//*/
 	////Add tests for long words
-	//Polyomino p1("rdlu");
+	//Polyomino p1("eswn");
 	//test(p1.circularWord());
 	//test(!p1.collision());
 	//test(p1.clockwise());
 	//test(p1.tiles());
 	//p1.print();
 	////Backtrack of Boundary 1
-	//Polyomino p2("drul");
+	//Polyomino p2("senw");
 	//test(p2.circularWord());
 	//test(!p2.collision());
 	//test(!p2.clockwise());
@@ -123,18 +123,18 @@ int main()
 	//test(p12.tiles());
 	
 
-	//////Timing tests
+	////Timing tests
 	//clock_t start;
 	//clock_t end;
 	//double duration;
-	//const int COUNT = 1000;
+	//const int COUNT = 100;
 	//int factor = 2;
 	//Polyomino* p[COUNT];
-
+	//double totalTime = 0;
 
 	//for (int i = 0; i < COUNT; i++)
 	//{
-	//	p[i] = new Polyomino("rdrrdrdldluldluluruu");
+	//	p[i] = new Polyomino("eseeseswswnwswnwnenn");
 	//	p[i]->scale(factor); //Scales boundary word by argument and randomizes the start point
 	//}
 	//
@@ -144,21 +144,27 @@ int main()
 	//	test(p[i]->tiles());
 	//	end = clock();
 	//	duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	//	cout << duration << "\tseconds\n";
+	//	totalTime += duration;
+	//	cout << duration << endl;
 	//}
 	//
+	//delete[] p;
 
-
+	//cout << "Tests took a total of " << totalTime << "\tseconds\n";
 	//cout << "Tests completed" << endl;
 
 	//for (int i = 0; i < COUNT; i++)
 	//	delete p[i];
 	
 	Polyomino p("neseeseswswnwswnwnen");
-	
-	
 	p.sortFactors();
 	p.printFactors();
+	test(p.tiles());
 
+	Polyomino p2("nenesenessswnwswnw");
+	p.printFactors();
+	test(p2.tiles());
+
+	cout << "Test completed" << endl;
 	return 0;
 }

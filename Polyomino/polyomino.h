@@ -10,6 +10,7 @@
 #include "admissible_factor.h"
 #include "../Suffix_Trie/node.h"
 #include "../Suffix_Trie/suffixtrie.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -23,18 +24,19 @@ class Polyomino
 		bool tiles();
 		void scale(int n);
 		//void print();
-		//Helper functions
 		bool circularWord();
 		bool clockwise();
 		bool collision();
-		SuffixTrie* st;
-		vector <AdmissibleFactor> A;
 		int indexOfComplement(int i);
-		string boundString;
-
 		void getFactors();
 		void sortFactors();
 		void printFactors();
+		void printFactorArray();
+		string boundString;
+		SuffixTrie* st;
+		vector <AdmissibleFactor> A;
+		vector <vector <AdmissibleFactor>> factorArray;
+
 	private:
 		//returns the reverse complement
 		string reverseComplement(string s);
