@@ -136,24 +136,45 @@ bool Polyomino::tiles2()
 {
 	int ei = 0; //index for start-indexed vector  *NOTE - start-indexed lengths increase with increasing index
 	int si = 0; //index for end-indexed vector			  end-indexed lengths decrease with increasing index
+	int i;      //index for current factor to check
+	int k;		//index for right hand factor
+	int l;		//index for left hand factor
 
-	for (int i = 0; i < boundaryLength / 2; i++)
+	for (i = 0; i < boundaryLength; i++)
 	{
-		if (endIndexed[i].empty())
+		/*if (endIndexed[i].empty())
 			continue;
+		
+		k = i + 1;
 
-		if (!startIndexed[i + 1].empty())
+		if (!startIndexed[k].empty())
 		{
-			while (endIndexed[i][ei].length + startIndexed[i + 1].at(si).length <= boundaryLength)
+			while (endIndexed[i][ei].length + startIndexed[k].at(si).length <= boundaryLength/2)
 			{	
-				cout << i + 1 << " si: " << si << " " << startIndexed[i + 1][si].length << endl;
 				si++;
+
+				if (si == startIndexed[k].size())
+					break;
 			}
-		}
+			si--;
+
+		}*/
 
 	}
 
 	return false;
+	/*
+	a + b <= n/2
+	int bi = 0;
+
+	for (each A that ends at W[i]
+	while (B[bi[.length + A.length <=2)
+	==Bi;
+	--bi;
+	int c.start = B.[Bi].end]+1
+	int cend = (A.begin + n/2 + n) % n
+	//make containers for each start and end point at each position for all admissible factors
+	*/
 }
 
 //Test if the path ends where it started
