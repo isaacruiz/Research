@@ -123,7 +123,7 @@ int main()
 	//test(p12.tiles());
 	
 
-	//Timing tests
+	//Timing tests-------------------------------------------------------------------------------------------------------------------------------!
 	//clock_t start;
 	//clock_t end;
 	//double duration;
@@ -156,7 +156,7 @@ int main()
 
 	//for (int i = 0; i < COUNT; i++)
 	//	delete p[i];
-	
+	//-------------------------------------------------------------------------------------------------------------------------------------------!
 
 	//cout << "Factors for boundary word nesw:\n";
 	//Polyomino b1("nesw");
@@ -170,9 +170,9 @@ int main()
 	cout << "Boundary word length: " << b2.boundaryLength << endl;
 	b2.printFactors();
 	b2.printLookupVectors();
+	b2.tiles2();
 	test(b2.tiles());
 	
-
 	/*Polyomino b3("nenesenessswnwswnw");
 	cout << "\nFactors for boundary word nenesenessswnwswnw:\n";
 	cout << "Boundary word length: " << b3.boundaryLength << endl;

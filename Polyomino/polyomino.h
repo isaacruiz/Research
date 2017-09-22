@@ -38,9 +38,9 @@ class Polyomino
 		SuffixTrie* st;
 		FactorVector A;
 
-		FactorVector* stored_by_endpoint;
-		FactorVector* stored_by_startpoint;
-		AdmissibleFactor* stored_by_midpoint;
+		FactorVector* endIndexed;
+		FactorVector* startIndexed;
+		AdmissibleFactor* midIndexed;
 
 		void printLookupVectors();
 		//2 Arrays of vectors, index stores where the vector ends/starts
