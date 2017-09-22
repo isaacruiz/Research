@@ -55,6 +55,8 @@ SuffixTrie::SuffixTrie(string s)
 	}
 }
 
+
+//BUG IN DELETE FUNCTION THAT NEEDS TO BE FIXED
 SuffixTrie :: ~SuffixTrie()
 {
 	// AW: This is a _destructor_
@@ -62,6 +64,7 @@ SuffixTrie :: ~SuffixTrie()
 	// (either is deleted or goes out of scope)
 	// It needs to handle "clean up": deleting any memory allocated
 	// using the "new" keyword
+
 	delete_tree(root);
 
 }
@@ -74,6 +77,7 @@ void SuffixTrie::delete_tree(Node* cur)
 	for (int i = 0; i < CHARSET; i++)
 		delete_tree(cur->child[i]);
 
+	
 	delete cur;
 	
 }

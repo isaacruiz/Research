@@ -7,19 +7,21 @@ Polyomino::Polyomino(string bw)
 	setCoordinates();
 	boundString = bw + bw + reverseComplement(bw) + reverseComplement(bw);
 	st = new SuffixTrie(boundString);
-	
-	factorArray.resize(boundaryLength);
-	for (int i = 0; i < boundaryLength; i++)
-	{
-		factorArray[i].resize(5);
-	}
+	stored_by_endpoint = new FactorVector[boundaryLength + 1];
+	stored_by_startpoint = new FactorVector[boundaryLength + 1];
+	stored_by_midpoint = new AdmissibleFactor [boundaryLength * 2 + 1];
 	getFactors();
 	sortFactors();
 }
 
 Polyomino::~Polyomino()
 {
+
 	delete[] coordinates;
+	delete[] stored_by_startpoint;
+	delete[] stored_by_endpoint;
+	delete[] stored_by_midpoint;
+	delete st;
 }
 
 void Polyomino::setCoordinates()
@@ -120,6 +122,33 @@ bool Polyomino::tiles()
 		}
 	}
 	return false;
+
+}
+
+bool Polyomino::tiles2()
+{
+	int a = 0;
+	int b = 0;
+
+	for (int i = 0; i < boundaryLength; i++)
+	{
+		while (stored_by_endpoint[i][a].length + stored_by_startpoint[i + 1][b].length <= boundaryLength/2)
+		{
+			b++;
+		}
+		b--;
+
+	}
+
+	//Loop through ending positions of A in boundary word
+
+	//Check the longest A factor with the longest factor of B so that the the sum of lengths is less than half the boundary length
+
+	//Check if there is a corresponding C that totals to half the length of boundary
+
+	//If not, let "A" be "C" and check for the longest B factor that ends where A starts so that the total length is <=boundaryLength/2
+
+	//Then check if there is an "A" factor that fits into the remaining space to fill half the boundary length
 
 }
 
@@ -431,15 +460,19 @@ void Polyomino::getFactors()
 			//cout << "adding factor " << start << "-" << end << " from position " << pos << endl;
 			a.start = start % boundaryLength;
 			a.end = end % boundaryLength;
+			a.midpoint = (float)(start + end) / 2;
 			a.length = end - start + 1;
 			a.factor = boundString.substr(start, a.length);
-
+			
 			a_hat.start = (a.start + boundaryLength/2) % boundaryLength;
 			a_hat.end = (a.end + boundaryLength/2) % boundaryLength;
+			a_hat.midpoint = (float)(a_hat.start + a_hat.end) / 2;
 			a_hat.length = a.length;
 			a_hat.factor = boundString.substr(a_hat.start, a_hat.length);
+			
 			A.push_back(a);
 			A.push_back(a_hat);
+
 		}
 	}
 }
@@ -447,8 +480,9 @@ void Polyomino::getFactors()
 void Polyomino::sortFactors()
 {
 	int* counter = new int[boundaryLength] {};
-	vector <AdmissibleFactor> temp = A;
+	FactorVector temp = A;
 	
+	//Sorting by length
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
 		counter[temp[i].length]++;
@@ -472,9 +506,18 @@ void Polyomino::sortFactors()
 
 	temp = A;
 
+	sortFactorsByEnd(temp, counter);
+	loadLookupVectors();
+
+	delete[] counter;
+}
+
+void Polyomino::sortFactorsByEnd(FactorVector &e, int* counter)
+{
+	FactorVector temp = A;
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
-		counter[temp[i].start]++;
+		counter[e[i].end]++;
 	}
 
 	for (int i = 1; i < boundaryLength; i++)
@@ -484,15 +527,21 @@ void Polyomino::sortFactors()
 
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
-		counter[temp[i].start]--;
-		A[counter[temp[i].start]] = temp[i];
-		factorArray[temp[i].start].push_back(temp[i]);
+		counter[e[i].end]--;
+		A[counter[e[i].end]] = temp[i];
 	}
+}
 
-
-
-	delete[] counter;
-
+void Polyomino::loadLookupVectors()
+{
+	for (unsigned int i = 0; i < A.size(); i++)
+	{
+		//cout << "Pushing start-midpoint-endpoint: " << A[i].start << " " << A[i].midpoint << " " << A[i].end << "...\n";
+		
+		stored_by_startpoint[A[i].start].push_back(A[i]);
+		stored_by_midpoint[(int)(A[i].midpoint * 2)] = A[i];
+		stored_by_endpoint[A[i].end].push_back(A[i]);
+	}
 }
 
 void Polyomino::printFactors()
@@ -503,13 +552,26 @@ void Polyomino::printFactors()
 	}
 }
 
-void Polyomino::printFactorArray()
+void Polyomino::printLookupVectors()
 {
-	for (unsigned int i = 0; i < factorArray.size(); i++)
+	cout << "Stored by starting point:\n";
+	for (int i = 0; i < boundaryLength; i++)
 	{
-		for (unsigned int j = 0; j < factorArray[i].size(); j++)
-		{
-			cout << "Start: " << factorArray[i][j].start << " End: " << factorArray[i][j].end << " Length: " << factorArray[i][j].length << "  " << factorArray[i][j].factor << endl;
-		}
+		for (unsigned int j = 0; j < stored_by_startpoint[i].size(); j++)
+			cout << "At ["<<i << "][" << j << "] " << stored_by_startpoint[i][j].start << " " << stored_by_startpoint[i][j].midpoint << " " << stored_by_startpoint[i][j].end << "\t\tlength: " << stored_by_startpoint[i][j].length << endl;
+	}
+	cout << "Stored by end point:\n";
+	for (int i = 0; i < boundaryLength; i++)
+	{
+		for (unsigned int j = 0; j < stored_by_endpoint[i].size(); j++)
+			cout << "At [" << i << "][" << j << "] " << stored_by_endpoint[i][j].start << " " << stored_by_endpoint[i][j].midpoint << " " << stored_by_endpoint[i][j].end << " \t\tlength: " << stored_by_endpoint[i][j].length << endl;
+	}
+
+	cout << "Stored by midpoint:\n";
+	for (int i = 0; i < 2 * boundaryLength; i++)
+	{
+		if (stored_by_midpoint[i].length == 0)
+			continue;
+		cout << "At [" << i << "] " << stored_by_midpoint[i].start << " " << stored_by_midpoint[i].midpoint << " " << stored_by_midpoint[i].end << "\t\tlength: " << stored_by_midpoint[i].length << endl;
 	}
 }

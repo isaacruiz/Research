@@ -5,14 +5,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <iomanip>
 #include <vector>
 #include "admissible_factor.h"
 #include "../Suffix_Trie/node.h"
 #include "../Suffix_Trie/suffixtrie.h"
-#include <iomanip>
 
 using namespace std;
+
+typedef vector<AdmissibleFactor>FactorVector;
 
 class Polyomino
 {
@@ -21,7 +21,8 @@ class Polyomino
 		Polyomino(string bw);
 		~Polyomino();
 		bool isBoundaryWord();
-		bool tiles();
+		bool tiles();  //cubic algorithm
+		bool tiles2(); //linear algorithm
 		void scale(int n);
 		//void print();
 		bool circularWord();
@@ -30,13 +31,25 @@ class Polyomino
 		int indexOfComplement(int i);
 		void getFactors();
 		void sortFactors();
+		void sortFactorsByEnd(FactorVector &e, int* counter);
 		void printFactors();
-		void printFactorArray();
+		void loadLookupVectors();
 		string boundString;
 		SuffixTrie* st;
-		vector <AdmissibleFactor> A;
-		vector <vector <AdmissibleFactor>> factorArray;
+		FactorVector A;
+
+		FactorVector* stored_by_endpoint;
+		FactorVector* stored_by_startpoint;
+		AdmissibleFactor* stored_by_midpoint;
+
+		void printLookupVectors();
+		//2 Arrays of vectors, index stores where the vector ends/starts
+		//The vectors in the ending array sorts factors in order of longer to shorter
+		//The vectors in the starting array sorts factors in order of shorter to longer
+		//Another vector that holds factors by their midpoint
+
 		int boundaryLength;
+
 	private:
 		//returns the reverse complement
 		string reverseComplement(string s);

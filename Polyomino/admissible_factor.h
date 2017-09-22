@@ -6,10 +6,11 @@ using namespace std;
 class AdmissibleFactor
 {
 	public:
-		int start;
-		int end;
-		int length;
-		string factor;
+		int start = 0;
+		int end = 0;
+		float midpoint = 0;
+		int length  = 0;
+		string factor = "";
 };
 
 

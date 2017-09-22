@@ -123,18 +123,19 @@ int main()
 	//test(p12.tiles());
 	
 
-	////Timing tests
+	//Timing tests
 	//clock_t start;
 	//clock_t end;
 	//double duration;
-	//const int COUNT = 100;
-	//int factor = 2;
+	//const int COUNT = 5;
+	//int factor = 128;
 	//Polyomino* p[COUNT];
 	//double totalTime = 0;
-
 	//for (int i = 0; i < COUNT; i++)
-	//{
+	//{//eseeseswswnwswnwnenn tiles
+	//	//neneneeseesswswwnwww does not tile
 	//	p[i] = new Polyomino("eseeseswswnwswnwnenn");
+
 	//	p[i]->scale(factor); //Scales boundary word by argument and randomizes the start point
 	//}
 	//
@@ -148,7 +149,7 @@ int main()
 	//	cout << duration << endl;
 	//}
 	//
-	//delete[] p;
+	//
 
 	//cout << "Tests took a total of " << totalTime << "\tseconds\n";
 	//cout << "Tests completed" << endl;
@@ -157,24 +158,26 @@ int main()
 	//	delete p[i];
 	
 
-	cout << "Factors for boundary word nesw:\n";
-	Polyomino b1("nesw");
-	cout << "Boundary word length: " << b1.boundaryLength << endl;
-	b1.sortFactors();
-	b1.printFactors();
-	test(b1.tiles());
+	//cout << "Factors for boundary word nesw:\n";
+	//Polyomino b1("nesw");
+	//cout << "Boundary word length: " << b1.boundaryLength << endl;
+	//b1.printFactors();
+	//b1.printLookupVectors();
+	//test(b1.tiles());
 
 	cout << "\nFactors for boundary word neseeseswswnwswnwnen:\n";
 	Polyomino b2("neseeseswswnwswnwnen");
 	cout << "Boundary word length: " << b2.boundaryLength << endl;
-	b2.sortFactors();
 	b2.printFactors();
+	b2.printLookupVectors();
 	test(b2.tiles());
+	
 
-	Polyomino b3("nenesenessswnwswnw");
+	/*Polyomino b3("nenesenessswnwswnw");
 	cout << "\nFactors for boundary word nenesenessswnwswnw:\n";
 	cout << "Boundary word length: " << b3.boundaryLength << endl;
 	b3.printFactors();
+	b3.printLookupVectors();
 	test(b3.tiles());
 	
 	
@@ -182,8 +185,29 @@ int main()
 	cout << "\nFactors for boundary word eessenesseswwwswswnnwwneeenwnn:\n";
 	cout << "Boundary word length: " << b4.boundaryLength << endl;
 	b4.printFactors();
+	b4.printLookupVectors();
 	test(b4.tiles());
+	
+	cout << "\nFactors for boundary word nnnneeeesssswwww:\n";
+	Polyomino b5("nnnneeeesssswwww");
+	cout << "Boundary word length: " << b5.boundaryLength << endl;
+	b5.printFactors();
+	b5.printLookupVectors();
+	test(b5.tiles());*/
 
 	cout << "\nTest completed" << endl;
 	return 0;
 }
+
+/*
+a + b <= n/2
+int bi = 0;
+
+for (each A that ends at W[i]
+	while (B[bi[.length + A.length <=2)
+		==Bi;
+	--bi;
+	int c.start = B.[Bi].end]+1
+	int cend = (A.begin + n/2 + n) % n
+//make containers for each start and end point at each position for all admissible factors
+*/
