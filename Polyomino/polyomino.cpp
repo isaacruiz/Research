@@ -137,7 +137,7 @@ bool Polyomino::tiles2()
 	int si = 0; //index of factor in end-indexed vector			  end-indexed lengths decrease with increasing index
 	int i;      //index for vector of factors that end at position i
 	int r;		//index for vector of factors that start at position r
-	int l;		//index for vector of factors that end at poistion l
+	//int l;		//index for vector of factors that end at poistion l
 	int Clength;
 	float ci;	//
 	for (i = 0; i < boundaryLength; i++)
@@ -148,7 +148,7 @@ bool Polyomino::tiles2()
 		if (endIndexed[i].empty()) //move on to next position if there are no factors
 			continue;
 
-		while (ei < endIndexed[i].size()) //goes through current vector in decreasing lengths
+		while (ei < (int)endIndexed[i].size()) //goes through current vector in decreasing lengths
 		{
 			r = i + 1;
 			if (!startIndexed[r].empty())
@@ -171,7 +171,7 @@ bool Polyomino::tiles2()
 				//cout << "Clength: " << Clength << " for factors " << endIndexed[i][ei].start << "-" << endIndexed[i][ei].end << " and " << startIndexed[r][si].start << " - " << startIndexed[r][si].end << endl;
 				//cout << "ci: " << ci << endl;
 
-				ci = (float)Clength / 2 - 0.5 + startIndexed[r][si].end + 1; //subtract half because even length factors are centered on mid points between indicies
+				ci = (float)Clength / 2 - 0.5f + startIndexed[r][si].end + 1; //subtract half because even length factors are centered on mid points between indicies
 				if (midIndexed[(int)(2 * ci)].length == 0) //Length is zero when there is no factor that exists at midpoint ci
 					return false;
 				else
