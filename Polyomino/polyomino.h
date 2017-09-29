@@ -63,7 +63,6 @@ class Polyomino
 		coordinate* coordinates;
 		string boundaryWord;
 		int minX, maxX, minY, maxY;
-
 };
 #endif
 

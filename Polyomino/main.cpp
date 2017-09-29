@@ -9,38 +9,38 @@ inline void _test(const char* expression, const char* file, int line)
 
 int main()
 {
-	///*
 	//Boundary 1
 	//┌─┐
 	//└─┘
 	//*/
-	////Add tests for long words
-	//Polyomino p1("eswn");
-	//test(p1.circularWord());
-	//test(!p1.collision());
-	//test(p1.clockwise());
-	//test(p1.tiles());
-	//p1.print();
-	////Backtrack of Boundary 1
-	//Polyomino p2("senw");
-	//test(p2.circularWord());
-	//test(!p2.collision());
-	//test(!p2.clockwise());
+	Polyomino b1("nesw");
+	test(b1.circularWord());
+	test(!b1.collision());
+	test(b1.clockwise());
+	test(b1.tiles());
+	test(b1.tiles2());
+
+	//Backtrack of Boundary 1
+	Polyomino p2("senw");
+	test(p2.circularWord());
+	test(!p2.collision());
+	test(!p2.clockwise());
+	//test(!p2.tiles());
+	//test(!p2.tiles2());
 
 	////Shift of Boundary 1
-	//Polyomino p3("dlur");
-	//test(p3.circularWord());
+	Polyomino p3("swne");
+	test(p3.circularWord());
 	//test(!p3.collision());
-	//test(p3.clockwise());
-	////test(tiles());
+	test(p3.clockwise());
+	test(p3.tiles());
 
-	////Backtrack of shift of Boundary 1
-	//Polyomino p4("ruld");
-	//test(p4.circularWord());
-	//test(!p4.collision());
-	//test(!p4.clockwise());
+	//Backtrack of shift of Boundary 1
+	Polyomino p4("enws");
+	test(p4.circularWord());
+	test(!p4.collision());
+	test(!p4.clockwise());
 
-	///*
 	////Boundary 2
 	////  ┌─┐
 	////  │ └───┐
@@ -48,80 +48,113 @@ int main()
 	////└─┐ ┌─┐ ┌─┘
 	////  └─┘ └─┘
 	////*/
-	//Polyomino p5("rdrrdrdldluldluluruu");  //Tiles by translation
-	//test(p5.circularWord());
-	//test(!p5.collision());
-	//test(p5.clockwise());
-	//test(p5.tiles());
-	//p5.print();
-	//Polyomino p6("rdrrdrdldluldluluruuu");  //Boundary 2 with extra character at end
-	////test(p6.collision());  //Does not test true with sorted coordinate algorithm
-	//test(!p6.circularWord());
-	//test(!p6.tiles());
+	Polyomino b2("neseeseswswnwswnwnen");
+	test(b2.circularWord());
+	test(!b2.collision());
+	test(b2.clockwise());
+	test(b2.tiles());
+	test(b2.tiles2());
+	
+	Polyomino b2_2("eseeseswswnwswnwnennn");  //Boundary 2 with extra character at end
+	//test(b2_2.collision());  //Does not test true with sorted coordinate algorithm
+	test(!b2_2.circularWord());
+	test(!b2_2.tiles());
+	test(!b2_2.tiles2());
 
-	//Polyomino p7("ddldrdrurdrurulullul"); //Backtrack of Boundary 2
-	//test(!p7.clockwise());
-
-	//Polyomino p8("rdrrdrdldluldluluru");  //Boundary 2, but missing last character to complete boundary
-	//test(!p8.circularWord());
-	//test(!p8.collision());
-	//test(p8.clockwise());
-
+	Polyomino b2_3("sswsesenesenenwnwwnw"); //Backtrack of Boundary 2
+	test(!b2_3.clockwise());
+	//test(!b2_3.tiles());
+	//test(!b2_3.tiles2());
+	
+	Polyomino b2_4("eseeseswswnwswnwnen");  //Boundary 2, but missing last character to complete boundary
+	test(!b2_4.circularWord());
+	test(!b2_4.collision());
+	test(b2_4.clockwise());
 	///*
 	//Boundary 3
+	//         ┌─┐ ┌─┐
+	//       ┌─┘ └─┘ │   
+	//       └─┐ ┌─┐ │
+	//         └─┘ └─┘
+	//*/
+	
+	Polyomino b3("nenesenessswnwswnw");
+	test(b3.circularWord());
+	test(!b3.collision());
+	test(b3.clockwise());
+	test(b3.isBoundaryWord());
+	test(b3.tiles());
+	test(b3.tiles2());
+	
+	///*
+	//Boundary 4
+	//       ┌────┐
+	//       │    │ ┌─┐
+	//       └─┐  └─┘ │
+	//   ┌─────┘      └─┐
+	//   └───┐    ┌─────┘ 
+	//       │ ┌──┘
+	//       └─┘
+	//*/
+	Polyomino b4("eessenesseswwwswswnnwwneeenwnn");
+	test(b4.circularWord());
+	test(!b4.collision());
+	test(b4.clockwise());
+	test(b4.isBoundaryWord());
+	test(b4.tiles());
+	test(b4.tiles2());
+	
+	Polyomino b4_2("sseswwwswswnnwwneeenwnneessene");
+	test(b4_2.circularWord());
+	test(!b4_2.collision());
+	test(b4_2.clockwise());
+	test(b4_2.isBoundaryWord());
+	test(b4_2.tiles());
+	test(b4_2.tiles2());
+
+	//Boundary 5
+	//┌──────┐
+	//│      │
+	//│      │
+	//└──────┘
+
+	Polyomino b5("nnnneeeesssswwww");
+	test(b5.tiles());
+	test(b5.tiles2());
+
+
+
+	//Boundary 6
+	//┌─┐ ┌─┐
+	//│ └─┘ │
+	//└─────┘
+	//*/
+	
+	Polyomino b6("esenesswwwnn");//Does not tile by translation
+	test(b6.circularWord());
+	test(!b6.collision());
+	test(b6.clockwise());
+	test(!b6.tiles());
+	test(!b6.tiles2());
+
+	Polyomino b7("nnesenenessswwww");
+	test(!b7.tiles());
+	test(!b7.tiles2());
+
+	///*
+	//Boundary 8
 	//┌─┐ ┌─┐
 	//│ └─┼─┘
 	//└───┘
 	//*/
 
-	//Polyomino p9("rdrrulddlluu");
-	//test(p9.circularWord());
-	//test(p9.collision());
-	////test(clockwise()); Clockwise method doesn't work for paths with loops
-	//
-	///*
-	//Boundary 4
-	//┌─┐ ┌─┐
-	//│ └─┘ │
-	//└─────┘
-	//*/
-	//Polyomino p10("rdrurddllluu");//Does not tile by translation
-	//test(p10.circularWord());
-	//test(!p10.collision());
-	//test(p10.clockwise());
-	//test(!p10.tiles());
+	Polyomino b8("eseenwsswwnn");
+	test(b8.circularWord());
+	test(b8.collision());
+	//test(b8.clockwise()); //Clockwise method doesn't work for paths with loops
+	//test(!b8.tiles());
+	//test(!b8.tiles2());
 
-	///*
-	//Boundary 5
- //       ┌────┐
- //       │    │ ┌─┐
- //       └─┐  └─┘ │
- //   ┌─────┘      └─┐
- //   └───┐    ┌─────┘ 
- //       │ ┌──┘
- //       └─┘
-	//*/
-	//Polyomino p11("eessenesseswwwswswnnwwneeenwnn");  //Has 2 zero length BN factorizations
-	//test(p11.circularWord());
-	//test(!p11.collision());
-	//test(p11.clockwise());
-	//test(p11.isBoundaryWord());
-	//test(p11.tiles());
-
-	///*
-	//Boundary 6
- //         ┌─┐ ┌─┐
- //       ┌─┘ └─┘ │   
- //       └─┐ ┌─┐ │
- //         └─┘ └─┘
-	//*/
-	//Polyomino p12("ururdrurdddluldlul");
-	//test(p12.circularWord());
-	//test(!p12.collision());
-	//test(p12.clockwise());
-	//test(p12.isBoundaryWord());
-	//test(p12.tiles());
-	
 
 	//Timing tests-------------------------------------------------------------------------------------------------------------------------------!
 	//clock_t start;
@@ -158,56 +191,7 @@ int main()
 	//	delete p[i];
 	//-------------------------------------------------------------------------------------------------------------------------------------------!
 
-	//cout << "Factors for boundary word nesw:\n";
-	//Polyomino b1("nesw");
-	//cout << "Boundary word length: " << b1.boundaryLength << endl;
-	//b1.printFactors();
-	//b1.printLookupVectors();
-	//test(b1.tiles());
-
-	cout << "\nFactors for boundary word neseeseswswnwswnwnen:\n";
-	Polyomino b2("neseeseswswnwswnwnen");
-	cout << "Boundary word length: " << b2.boundaryLength << endl;
-	b2.printFactors();
-	b2.printLookupVectors();
-	b2.tiles2();
-	test(b2.tiles());
-	
-	/*Polyomino b3("nenesenessswnwswnw");
-	cout << "\nFactors for boundary word nenesenessswnwswnw:\n";
-	cout << "Boundary word length: " << b3.boundaryLength << endl;
-	b3.printFactors();
-	b3.printLookupVectors();
-	test(b3.tiles());
-	
-	
-	Polyomino b4("eessenesseswwwswswnnwwneeenwnn");
-	cout << "\nFactors for boundary word eessenesseswwwswswnnwwneeenwnn:\n";
-	cout << "Boundary word length: " << b4.boundaryLength << endl;
-	b4.printFactors();
-	b4.printLookupVectors();
-	test(b4.tiles());
-	
-	cout << "\nFactors for boundary word nnnneeeesssswwww:\n";
-	Polyomino b5("nnnneeeesssswwww");
-	cout << "Boundary word length: " << b5.boundaryLength << endl;
-	b5.printFactors();
-	b5.printLookupVectors();
-	test(b5.tiles());*/
-
-	cout << "\nTest completed" << endl;
+	cout << "Test completed" << endl;
 	return 0;
 }
 
-/*
-a + b <= n/2
-int bi = 0;
-
-for (each A that ends at W[i]
-	while (B[bi[.length + A.length <=2)
-		==Bi;
-	--bi;
-	int c.start = B.[Bi].end]+1
-	int cend = (A.begin + n/2 + n) % n
-//make containers for each start and end point at each position for all admissible factors
-*/

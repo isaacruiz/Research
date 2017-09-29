@@ -32,22 +32,21 @@ void Polyomino::setCoordinates()
 	int x = 0, y = 0;
 	for (int i = 0; i < boundaryLength; i++)
 	{
-
 		switch (boundaryWord.at(i))
 		{
 		case 'n':
 			y--;
 			break;
 
-		case 'd':
+		case 's':
 			y++;
 			break;
 
-		case 'l':
+		case 'w':
 			x--;
 			break;
 
-		case 'r':
+		case 'e':
 			x++;
 			break;
 		}
@@ -68,7 +67,7 @@ void Polyomino::setCoordinates()
 bool Polyomino::isBoundaryWord()
 {
 	if (!collision() && clockwise() && circularWord())
-		return true;
+return true;
 
 	else
 		return false;
@@ -85,36 +84,36 @@ bool Polyomino::tiles()
 	string A, B, C;
 
 	//Iterate over all possible positions of factorizations A, B, and C
-	for (posA = 0; posA < boundaryLength/2; posA++)
+	for (posA = 0; posA < boundaryLength / 2; posA++)
 	{
-		for(lenA = 1; lenA < boundaryLength/2; lenA++)
+		for (lenA = 1; lenA < boundaryLength / 2; lenA++)
 		{
 			A = str.substr(posA, lenA);
-//			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
-//				<< "Acomp: " << str.substr(posA + boundaryLength / 2, lenA) << endl;
-			if(reverseComplement(A) == str.substr(posA + boundaryLength/2, lenA))
+			//			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
+			//				<< "Acomp: " << str.substr(posA + boundaryLength / 2, lenA) << endl;
+			if (reverseComplement(A) == str.substr(posA + boundaryLength / 2, lenA))
 			{
-//				cout << endl;
+				//				cout << endl;
 
-				for(lenB = 1; lenA + lenB <= boundaryLength/2; lenB++)
+				for (lenB = 1; lenA + lenB <= boundaryLength / 2; lenB++)
 				{
 					posB = posA + lenA;
 					B = str.substr(posB, lenB);
-//					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
-//						<< "Bcomp: " << str.substr(posB + boundaryLength / 2, lenB) << endl;
-					if(reverseComplement(B) == str.substr(posB + boundaryLength/2, lenB))
+					//					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
+					//						<< "Bcomp: " << str.substr(posB + boundaryLength / 2, lenB) << endl;
+					if (reverseComplement(B) == str.substr(posB + boundaryLength / 2, lenB))
 					{
 						if (lenA + lenB == boundaryLength)
 							return true;
 						else {
-//							cout << endl;
+							//							cout << endl;
 							posC = posB + lenB;
 							C = str.substr(posC, boundaryLength / 2 - (lenB + lenA));
-//							cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
-//								<< "Ccomp: " << str.substr(posC + boundaryLength / 2, lenB) << endl;
+							//							cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
+							//								<< "Ccomp: " << str.substr(posC + boundaryLength / 2, lenB) << endl;
 							if (reverseComplement(C) == str.substr(posC + boundaryLength / 2, boundaryLength / 2 - (lenB + lenA)))
 								return true;
-//							cout << endl;
+							//							cout << endl;
 						}
 					}
 				}
@@ -134,34 +133,53 @@ bool Polyomino::tiles()
 
 bool Polyomino::tiles2()
 {
-	int ei = 0; //index for start-indexed vector  *NOTE - start-indexed lengths increase with increasing index
-	int si = 0; //index for end-indexed vector			  end-indexed lengths decrease with increasing index
-	int i;      //index for current factor to check
-	int k;		//index for right hand factor
-	int l;		//index for left hand factor
-
+	int ei = 0; //index of factor in start-indexed vector  *NOTE - start-indexed lengths increase with increasing index
+	int si = 0; //index of factor in end-indexed vector			  end-indexed lengths decrease with increasing index
+	int i;      //index for vector of factors that end at position i
+	int r;		//index for vector of factors that start at position r
+	int l;		//index for vector of factors that end at poistion l
+	int Clength;
+	float ci;	//
 	for (i = 0; i < boundaryLength; i++)
 	{
-		/*if (endIndexed[i].empty())
+		ei = 0;
+		si = 0;
+
+		if (endIndexed[i].empty()) //move on to next position if there are no factors
 			continue;
-		
-		k = i + 1;
 
-		if (!startIndexed[k].empty())
+		while (ei < endIndexed[i].size()) //goes through current vector in decreasing lengths
 		{
-			while (endIndexed[i][ei].length + startIndexed[k].at(si).length <= boundaryLength/2)
-			{	
-				si++;
+			r = i + 1;
+			if (!startIndexed[r].empty())
+			{
+				
+				while (endIndexed[i][ei].length + startIndexed[r][si].length <= boundaryLength / 2) //Finds the next biggest factor that adds to go over boundaryLength/2
+				{
+					si++;
+					if (si == startIndexed[r].size()) //Exit loop if the end of vector of factors is reached
+						break;
+				}
+				si--; //Decrement to previous factor to check for a C factor that might complete a BN factorization
+				
+				if (endIndexed[i][ei].length + startIndexed[r][si].length == boundaryLength / 2)
+					return true;
 
-				if (si == startIndexed[k].size())
-					break;
+				//Check if there exists a C factorization that completes the consecutive triple
+				Clength = boundaryLength / 2 - (endIndexed[i][ei].length + startIndexed[r][si].length);
+				//cout << Clength << " = " << boundaryLength / 2 << " - (" << endIndexed[i][ei].length << " + " << startIndexed[r][si].length << ")" << endl;
+				//cout << "Clength: " << Clength << " for factors " << endIndexed[i][ei].start << "-" << endIndexed[i][ei].end << " and " << startIndexed[r][si].start << " - " << startIndexed[r][si].end << endl;
+				//cout << "ci: " << ci << endl;
+
+				ci = (float)Clength / 2 - 0.5 + startIndexed[r][si].end + 1; //subtract half because even length factors are centered on mid points between indicies
+				if (midIndexed[(int)(2 * ci)].length == 0) //Length is zero when there is no factor that exists at midpoint ci
+					return false;
+				else
+					return true;
 			}
-			si--;
-
-		}*/
-
+			ei++;
+		}
 	}
-
 	return false;
 	/*
 	a + b <= n/2
@@ -264,49 +282,6 @@ bool Polyomino::clockwise()
 	else
 		return false;
 }
-
-//Returns true if the boundary word loops back on itself
-//bool Polyomino::collision()
-//{
-//	int x = 0, y = 0, mul = boundaryLength;
-//	
-//	set<int> coordinates;
-//
-//	coordinates.insert(mul* x + y); //Multiply x by mul to ensure "unique" sum
-//									//(1,0) -> 1   and (0,1) -> 1
-//									//(1,0) -> 100 and (0,1) -> 1
-//									//Fails if y coordinate reaches +-mul
-//
-//	for (size_t i = 0; i < boundaryLength - 1; i++)
-//	{
-//		switch (boundaryWord.at(i))
-//		{
-//			case 'n':
-//				y++;
-//				break;
-//
-//			case 'd':
-//				y--;
-//				break;
-//
-//			case 'l':
-//				x--;
-//				break;
-//
-//			case 'r':
-//				x++;
-//				break;
-//		}
-//
-//		if (coordinates.find(mul * x + y) != coordinates.end())
-//			return true;
-//		
-//		else
-//			coordinates.insert(mul * x + y);
-//	}
-//
-//	return false;
-//}
 
 //Checks for collisions with radix sort
 bool Polyomino::collision()
@@ -447,7 +422,6 @@ int Polyomino::indexOfComplement(int x)
 		i += boundaryLength;
 
 	i += 2 * boundaryLength - boundaryLength/2;
-
 	//cout << "Complement index of " << x << " is " << i << " with a character of " << boundString.at(i) << endl;
 	return i;
 }
