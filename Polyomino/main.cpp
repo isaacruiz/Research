@@ -1,4 +1,6 @@
 ﻿#include "polyomino.h"
+#include <fstream>
+//#include "boundary_words.h"
 
 inline void _test(const char* expression, const char* file, int line)
 {
@@ -13,13 +15,15 @@ int main()
 	//┌─┐
 	//└─┘
 	//*/
+
+	//cout << blah[1];
 	Polyomino b1("nesw");
 	test(b1.circularWord());
 	test(!b1.collision());
 	test(b1.clockwise());
 	test(b1.tiles());
 	test(b1.tiles2());
-
+	
 	//Backtrack of Boundary 1
 	Polyomino p2("senw");
 	test(p2.circularWord());
@@ -31,7 +35,7 @@ int main()
 	////Shift of Boundary 1
 	Polyomino p3("swne");
 	test(p3.circularWord());
-	//test(!p3.collision());
+	test(!p3.collision());
 	test(p3.clockwise());
 	test(p3.tiles());
 
@@ -155,6 +159,48 @@ int main()
 	//test(!b8.tiles());
 	//test(!b8.tiles2());
 
+
+	ofstream out;
+	ifstream in;
+
+	out.open("output.txt");
+	in.open("boundary_words.txt");
+	
+	if (!out || !in)
+	{
+		cerr << "Unable to open files\n";
+		exit(1);
+	}
+
+	const int SIZE = 15000;
+	string words[SIZE];
+	Polyomino* p[SIZE];
+	int i = 0;
+	while (!in.eof() && i < SIZE)
+	{
+		in >> words[i];
+		p[i] = new Polyomino(words[i]);
+		++i;
+	}
+
+	//Print out tiling data
+	out << "                 Boundary Word    |W|   Max |A|+|B|         FactorA         FactorB  Tiles(Alg1)  Tiles(Alg2)  Tiling Disagreement |A|+|B| > |W|/2" << endl;
+	b1.writeLongestFactorPair(out);
+	b2.writeLongestFactorPair(out);
+	b3.writeLongestFactorPair(out);
+	b4.writeLongestFactorPair(out);
+	b5.writeLongestFactorPair(out);
+	b6.writeLongestFactorPair(out);
+	b7.writeLongestFactorPair(out);
+	b8.writeLongestFactorPair(out);
+	for (i = 0; i < SIZE; ++i)
+	{
+		p[i]->writeLongestFactorPair(out);
+	}
+	b3.printFactors();
+
+	in.close();
+	out.close();
 
 	//Timing tests-------------------------------------------------------------------------------------------------------------------------------!
 	//clock_t start;

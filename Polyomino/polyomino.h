@@ -7,6 +7,7 @@
 #include <ctime>
 #include <vector>
 #include "admissible_factor.h"
+//#include "boundary_words.h"
 #include "../Suffix_Trie/node.h"
 #include "../Suffix_Trie/suffixtrie.h"
 
@@ -18,6 +19,7 @@ class Polyomino
 {
 	public:
 		
+		Polyomino();
 		Polyomino(string bw);
 		~Polyomino();
 		bool isBoundaryWord();
@@ -34,6 +36,7 @@ class Polyomino
 		void sortFactorsByEnd(FactorVector &e, int* counter);
 		void printFactors();
 		void loadLookupVectors();
+		void writeLongestFactorPair(ofstream& f);
 		string boundString;
 		SuffixTrie* st;
 		FactorVector A;

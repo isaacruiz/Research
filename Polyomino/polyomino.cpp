@@ -1,4 +1,5 @@
 ﻿#include "polyomino.h"
+#include <fstream>
 
 Polyomino::Polyomino(string bw)
 {
@@ -12,6 +13,11 @@ Polyomino::Polyomino(string bw)
 	midIndexed = new AdmissibleFactor [boundaryLength * 2 + 1];
 	getFactors();
 	sortFactors();
+}
+
+Polyomino::Polyomino()
+{
+
 }
 
 Polyomino::~Polyomino()
@@ -83,14 +89,14 @@ bool Polyomino::tiles()
 	int posB, posC;
 	string A, B, C;
 
-	//Iterate over all possible positions of factorizations A, B, and C
+	//Iterate over all possible positions of factorizations A B and C
 	for (posA = 0; posA < boundaryLength / 2; posA++)
 	{
 		for (lenA = 1; lenA < boundaryLength / 2; lenA++)
 		{
 			A = str.substr(posA, lenA);
-			//			cout << "checking posA: " << posA << "  A: " << setw(15) << left << A <<"A_rc: " << setw(15) << left << reverseComplement(A)
-			//				<< "Acomp: " << str.substr(posA + boundaryLength / 2, lenA) << endl;
+			//			cout << checking posA:  << posA <<   A:  << setw(15) << left << A <<A_rc:  << setw(15) << left << reverseComplement(A)
+			//				<< Acomp:  << str.substr(posA + boundaryLength / 2 lenA) << endl;
 			if (reverseComplement(A) == str.substr(posA + boundaryLength / 2, lenA))
 			{
 				//				cout << endl;
@@ -99,8 +105,8 @@ bool Polyomino::tiles()
 				{
 					posB = posA + lenA;
 					B = str.substr(posB, lenB);
-					//					cout << "checking posB: " << posB << "  B: " << setw(15) << B << "B_rc: " << setw(15) << left << reverseComplement(B)
-					//						<< "Bcomp: " << str.substr(posB + boundaryLength / 2, lenB) << endl;
+					//					cout << checking posB:  << posB <<   B:  << setw(15) << B << B_rc:  << setw(15) << left << reverseComplement(B)
+					//						<< Bcomp:  << str.substr(posB + boundaryLength / 2 lenB) << endl;
 					if (reverseComplement(B) == str.substr(posB + boundaryLength / 2, lenB))
 					{
 						if (lenA + lenB == boundaryLength)
@@ -109,8 +115,8 @@ bool Polyomino::tiles()
 							//							cout << endl;
 							posC = posB + lenB;
 							C = str.substr(posC, boundaryLength / 2 - (lenB + lenA));
-							//							cout << "checking posC: " << posC << "  C: " << setw(15) << C << "C_rc: " << setw(15) << left << reverseComplement(C)
-							//								<< "Ccomp: " << str.substr(posC + boundaryLength / 2, lenB) << endl;
+							//							cout << checking posC:  << posC <<   C:  << setw(15) << C << C_rc:  << setw(15) << left << reverseComplement(C)
+							//								<< Ccomp:  << str.substr(posC + boundaryLength / 2 lenB) << endl;
 							if (reverseComplement(C) == str.substr(posC + boundaryLength / 2, boundaryLength / 2 - (lenB + lenA)))
 								return true;
 							//							cout << endl;
@@ -127,14 +133,14 @@ bool Polyomino::tiles()
 //Loop through ending positions of A in boundary word
 //Check the longest A factor with the longest factor of B so that the the sum of lengths is less than or equal to half the boundary length
 //Check if there is a corresponding C that totals to half the length of boundary
-//If not, let "A" be "C" and check for the longest B factor that ends right before "C" starts so that the total length is <=boundaryLength/2
-//Then check if there is an "A" factor that fits into the remaining space to fill half the boundary length
-//If neither returns true, then increment the position
+//If not let A be C and check for the longest B factor that ends right before C starts so that the total length is <=boundaryLength/2
+//Then check if there is an A factor that fits into the remaining space to fill half the boundary length
+//If neither returns true then increment the position
 
 bool Polyomino::tiles2()
 {
-	int ei = 0; //index of factor in start-indexed vector  *NOTE - start-indexed lengths increase with increasing index
-	int si = 0; //index of factor in end-indexed vector			  end-indexed lengths decrease with increasing index
+	int si = 0; //index of factor in start-indexed vector  *NOTE - start-indexed lengths increase with increasing index
+	int ei = 0; //index of factor in end-indexed vector			  end-indexed lengths decrease with increasing index
 	int i;      //index for vector of factors that end at position i
 	int r;		//index for vector of factors that start at position r
 	//int l;		//index for vector of factors that end at poistion l
@@ -167,9 +173,9 @@ bool Polyomino::tiles2()
 
 				//Check if there exists a C factorization that completes the consecutive triple
 				Clength = boundaryLength / 2 - (endIndexed[i][ei].length + startIndexed[r][si].length);
-				//cout << Clength << " = " << boundaryLength / 2 << " - (" << endIndexed[i][ei].length << " + " << startIndexed[r][si].length << ")" << endl;
-				//cout << "Clength: " << Clength << " for factors " << endIndexed[i][ei].start << "-" << endIndexed[i][ei].end << " and " << startIndexed[r][si].start << " - " << startIndexed[r][si].end << endl;
-				//cout << "ci: " << ci << endl;
+				//cout << Clength <<  =  << boundaryLength / 2 <<  - ( << endIndexed[i][ei].length <<  +  << startIndexed[r][si].length << ) << endl;
+				//cout << Clength:  << Clength <<  for factors  << endIndexed[i][ei].start << - << endIndexed[i][ei].end <<  and  << startIndexed[r][si].start <<  -  << startIndexed[r][si].end << endl;
+				//cout << ci:  << ci << endl;
 
 				ci = (float)Clength / 2 - 0.5f + startIndexed[r][si].end + 1; //subtract half because even length factors are centered on mid points between indicies
 				if (midIndexed[(int)(2 * ci)].length == 0) //Length is zero when there is no factor that exists at midpoint ci
@@ -300,7 +306,7 @@ bool Polyomino::collision()
 //Add code to measure running time
 void Polyomino::sortCoordinates()
 {
-	//Sort coordinate array by  y, then x
+	//Sort coordinate array by  y then x
 	int range;
 	int* offset;
 	int* counter;
@@ -407,9 +413,9 @@ void Polyomino::scale(int n)
 //	int col = maxX - minX;
 //	int row = maxY - minY;
 //
-//	string corner[] = { "┌","┐","└", "┘", "┌","┐","└", "┘" };
-//	string bar[] = { "─","│" };
-//	string intersection[] = { "┼", "┤", "├", "┴", "┬"};
+//	string corner[] = { ┌┐└ ┘ ┌┐└ ┘ };
+//	string bar[] = { ─│ };
+//	string intersection[] = { ┼ ┤ ├ ┴ ┬};
 //	string** board = new string*[col];
 //	string** offset;
 //
@@ -422,7 +428,7 @@ int Polyomino::indexOfComplement(int x)
 		i += boundaryLength;
 
 	i += 2 * boundaryLength - boundaryLength/2;
-	//cout << "Complement index of " << x << " is " << i << " with a character of " << boundString.at(i) << endl;
+	//cout << Complement index of  << x <<  is  << i <<  with a character of  << boundString.at(i) << endl;
 	return i;
 }
 
@@ -440,7 +446,7 @@ void Polyomino::getFactors()
 		if (i % 2 != 0)  //To do halfstep LCE queries between character positions
 		{
 		
-			//cout << "position: " << pos << ".5 position of complement: " << indexOfComplement(pos + j) << endl;
+			//cout << position:  << pos << .5 position of complement:  << indexOfComplement(pos + j) << endl;
 			rightExtensionLength = st->LCE(pos + 1, indexOfComplement(pos));
 			leftExtensionLength = st->LCE(pos + j + 1, indexOfComplement(pos + j));
 			start = pos - leftExtensionLength + 1;
@@ -457,7 +463,7 @@ void Polyomino::getFactors()
 
 		if (rightExtensionLength == leftExtensionLength && rightExtensionLength != 0)
 		{
-			//cout << "adding factor " << start << "-" << end << " from position " << pos << endl;
+			//cout << adding factor  << start << - << end <<  from position  << pos << endl;
 			a.start = start % boundaryLength;
 			a.end = end % boundaryLength;
 			a.midpoint = (float)(start + end) / 2;
@@ -537,7 +543,7 @@ void Polyomino::loadLookupVectors()
 {
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
-		//cout << "Pushing start-midpoint-endpoint: " << A[i].start << " " << A[i].midpoint << " " << A[i].end << "...\n";
+		//cout << Pushing start-midpoint-endpoint:  << A[i].start <<   << A[i].midpoint <<   << A[i].end << ...\n;
 		
 		startIndexed[A[i].start].push_back(A[i]);
 		midIndexed[(int)(A[i].midpoint * 2)] = A[i];
@@ -549,7 +555,7 @@ void Polyomino::printFactors()
 {
 	for (unsigned int i = 0; i < A.size(); i++)
 	{
-		cout << "Start-End: " << A[i].start << "-" << A[i].end << " Length: " << A[i].length << "  " << A[i].factor << endl;
+		cout << "Start-End: " << A[i].start << "-" << A[i].end <<  "Length: " << A[i].length << " " << A[i].factor << endl;
 	}
 }
 
@@ -559,13 +565,13 @@ void Polyomino::printLookupVectors()
 	for (int i = 0; i < boundaryLength; i++)
 	{
 		for (unsigned int j = 0; j < startIndexed[i].size(); j++)
-			cout << "At ["<<i << "][" << j << "] " << startIndexed[i][j].start << " " << startIndexed[i][j].midpoint << " " << startIndexed[i][j].end << "\t\tlength: " << startIndexed[i][j].length << endl;
+			cout << "At [" << i << "][" << j << "] " << startIndexed[i][j].start << " "  << startIndexed[i][j].midpoint <<  " " << startIndexed[i][j].end << "\t\tlength: " << startIndexed[i][j].length << endl;
 	}
 	cout << "Indexed by end point:\n";
 	for (int i = 0; i < boundaryLength; i++)
 	{
 		for (unsigned int j = 0; j < endIndexed[i].size(); j++)
-			cout << "At [" << i << "][" << j << "] " << endIndexed[i][j].start << " " << endIndexed[i][j].midpoint << " " << endIndexed[i][j].end << " \t\tlength: " << endIndexed[i][j].length << endl;
+			cout << "At [" << i << "][" << j << "] " << endIndexed[i][j].start << " "  << endIndexed[i][j].midpoint << " "  << endIndexed[i][j].end <<  "\t\tlength: " << endIndexed[i][j].length << endl;
 	}
 
 	cout << "Indexed by midpoint:\n";
@@ -573,6 +579,79 @@ void Polyomino::printLookupVectors()
 	{
 		if (midIndexed[i].length == 0)
 			continue;
-		cout << "At [" << i << "] " << midIndexed[i].start << " " << midIndexed[i].midpoint << " " << midIndexed[i].end << "\t\tlength: " << midIndexed[i].length << endl;
+		cout << "At [" << i << "]"  << midIndexed[i].start << " " << midIndexed[i].midpoint << " " << midIndexed[i].end << "\t\tlength: " << midIndexed[i].length << endl;
 	}
+}
+
+void Polyomino::writeLongestFactorPair(ofstream& f)
+{
+	int maxLength = 0;
+	int temp = 0;
+	int p = 0;
+	int i = 0;
+	bool consecutivePair = false;
+	AdmissibleFactor A;
+	AdmissibleFactor B;
+	for (i = 0; i < boundaryLength / 2; i++)
+	{
+		if (!endIndexed[i].empty() && !startIndexed[i + 1].empty())
+		{
+			consecutivePair = true;
+			A = endIndexed[i][0];
+			B = startIndexed[i + 1][startIndexed[i + 1].size() -1];
+
+			temp = A.length + B.length;
+
+			if (temp > maxLength) {
+				maxLength = temp;
+				p = i;
+			}
+		}
+	}
+
+	f.width(30);
+	f << boundaryWord;
+		
+	f.width(7);
+	f << boundaryLength;
+
+	if (consecutivePair)
+	{
+		A = endIndexed[p][0];  //Reassign A and B to get data of the max length factor pair
+		B = startIndexed[p + 1][startIndexed[p + 1].size() - 1];
+
+		f.width(14);
+		f << maxLength;
+
+
+		f.width(16);
+		f << A.factor;
+
+		f.width(16);
+		f << B.factor;
+	}
+	else
+	{
+		f.width(14);
+		f << "N/A";
+
+		f.width(16);
+		f << "N/A";
+
+		f.width(16);
+		f << "N/A";
+	}
+
+	f.width(11);
+	tiles() ? f << "yes" : f << "no";
+
+	f.width(13);
+	tiles2() ? f << "yes" : f << "no";
+
+	f.width(20);
+	(tiles() != tiles2()) ? f << "!!!" : f << "";
+
+	f.width(13);
+	(maxLength > boundaryLength/2) ? f << "yes": f << "";
+	f << endl;
 }
