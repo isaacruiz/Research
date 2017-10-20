@@ -188,8 +188,6 @@ int SuffixTrie::LCE_recursive(Node* cur, int i, int j)
 	index1 = char_to_index(str.at(i));
 	index2 = char_to_index(str.at(j));
 
-	//cout << "char at " << i << " is " << str.at(i) << " and is mapped to index " << index1 << endl;
-	//cout << "char at " << j << " is " << str.at(j) << " and is mapped to index " << index2 << endl;
 	if (cur->child[index1] != cur->child[index2])
 		return 0;
 
@@ -265,7 +263,7 @@ int SuffixTrie::char_to_index(char c)
 			break;
 
 		default:
-			index = -1;
+			index = 7;
 	}
 
 	return index;

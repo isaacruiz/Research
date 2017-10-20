@@ -7,7 +7,6 @@
 #include <ctime>
 #include <vector>
 #include "admissible_factor.h"
-//#include "boundary_words.h"
 #include "../Suffix_Trie/node.h"
 #include "../Suffix_Trie/suffixtrie.h"
 
@@ -23,48 +22,48 @@ class Polyomino
 		Polyomino(string bw);
 		~Polyomino();
 		bool isBoundaryWord();
-		bool tiles();  //cubic algorithm
-		bool tiles2(); //linear algorithm
-		void scale(int n);
-		//void print();
 		bool circularWord();
 		bool clockwise();
 		bool collision();
+		bool tiles();  //cubic algorithm
+		bool tiles2(); //linear algorithm
+		
 		int indexOfComplement(int i);
 		void getFactors();
 		void sortFactors();
 		void sortFactorsByEnd(FactorVector &e, int* counter);
-		void printFactors();
 		void loadLookupVectors();
-		void writeLongestFactorPair(ofstream& f);
-		string boundString;
-		SuffixTrie* st;
-		FactorVector A;
-
-		FactorVector* endIndexed;
-		FactorVector* startIndexed;
-		AdmissibleFactor* midIndexed;
-
+		
+		//Debugging methods
+		void printFactors();
+		void printCoordinates();
 		void printLookupVectors();
-		//2 Arrays of vectors, index stores where the vector ends/starts
-		//The vectors in the ending array sorts factors in order of longer to shorter
-		//The vectors in the starting array sorts factors in order of shorter to longer
-		//Another vector that holds factors by their midpoint
-
-		int boundaryLength;
+		void writeLongestFactorPair(ofstream& f);
+		void scale(int n);
+		//void print();
+		
 
 	private:
 		//returns the reverse complement
 		string reverseComplement(string s);
 		void sortCoordinates();
-	
-		void setCoordinates();
+		void getCoordinates();
 		struct coordinate
 		{
 			int x, y;
 		};
-		coordinate* coordinates;
+		
+		string boundString; //concatenation of the boundaryWord twice and its reverse complement
 		string boundaryWord;
+		SuffixTrie* st;
+		FactorVector A; //Vector of all the unsorted admissible factors
+		FactorVector* endIndexed;
+		FactorVector* startIndexed;
+		AdmissibleFactor* midIndexed;
+		int boundaryLength;
+
+		coordinate* coordinates;
+		
 		int minX, maxX, minY, maxY;
 };
 #endif

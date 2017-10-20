@@ -59,8 +59,10 @@ int main()
 	test(b2.tiles());
 	test(b2.tiles2());
 	
-	Polyomino b2_2("eseeseswswnwswnwnennn");  //Boundary 2 with extra character at end
-	//test(b2_2.collision());  //Does not test true with sorted coordinate algorithm
+	Polyomino b2_2("neseeseswswnwswnwnenn");  //Boundary 2 with extra character at end
+	
+	
+	test(b2_2.collision());  //Does not test true with sorted coordinate algorithm
 	test(!b2_2.circularWord());
 	test(!b2_2.tiles());
 	test(!b2_2.tiles2());
@@ -155,17 +157,17 @@ int main()
 	Polyomino b8("eseenwsswwnn");
 	test(b8.circularWord());
 	test(b8.collision());
-	//test(b8.clockwise()); //Clockwise method doesn't work for paths with loops
-	//test(!b8.tiles());
-	//test(!b8.tiles2());
+	test(!b8.clockwise());
+	test(!b8.tiles());
+	test(!b8.tiles2());
 
 
-	ofstream out;
 	ifstream in;
-
-	out.open("output.txt");
 	in.open("boundary_words.txt");
 	
+	ofstream out;
+	out.open("output2.txt");
+
 	if (!out || !in)
 	{
 		cerr << "Unable to open files\n";
@@ -183,24 +185,49 @@ int main()
 		++i;
 	}
 
-	//Print out tiling data
-	out << "                 Boundary Word    |W|   Max |A|+|B|         FactorA         FactorB  Tiles(Alg1)  Tiles(Alg2)  Tiling Disagreement |A|+|B| > |W|/2" << endl;
-	b1.writeLongestFactorPair(out);
-	b2.writeLongestFactorPair(out);
-	b3.writeLongestFactorPair(out);
-	b4.writeLongestFactorPair(out);
-	b5.writeLongestFactorPair(out);
-	b6.writeLongestFactorPair(out);
-	b7.writeLongestFactorPair(out);
-	b8.writeLongestFactorPair(out);
 	for (i = 0; i < SIZE; ++i)
 	{
-		p[i]->writeLongestFactorPair(out);
+		test(p[i]->tiles() == p[i]->tiles2());
 	}
-	b3.printFactors();
+
+	////Print out tiling data
+	//out << "                 Boundary Word    |W|   Max |A|+|B|         FactorA         FactorB  Tiles(Alg1)  Tiles(Alg2)  Tiling Disagreement |A|+|B| > |W|/2" << endl;
+	//b1.writeLongestFactorPair(out);
+	//b2.writeLongestFactorPair(out);
+	//b3.writeLongestFactorPair(out);
+	//b4.writeLongestFactorPair(out);
+	//b5.writeLongestFactorPair(out);
+	//b6.writeLongestFactorPair(out);
+	//b7.writeLongestFactorPair(out);
+	//b8.writeLongestFactorPair(out);
+	//for (i = 0; i < SIZE; ++i)
+	//{
+	//	p[i]->writeLongestFactorPair(out);
+	//}
 
 	in.close();
-	out.close();
+	//out.close();
+
+	
+
+	////Test boundary word for all possible starting positions
+	//Polyomino* poly[20];
+	//string bw = "neeseeswwwnw";
+	//ofstream start;
+	//start.open("start.txt");
+
+	//for (int i = 0; i < bw.length(); i++) {
+	//	
+	//	string modBW = bw.substr(i, bw.length() - i) + bw.substr(0, i);
+	//	poly[i] = new Polyomino(modBW);
+	//	poly[i]->writeLongestFactorPair(start);
+	//}
+
+
+	//poly[0]->printLookupVectors();
+	//poly[0]->printFactors();
+
+
 
 	//Timing tests-------------------------------------------------------------------------------------------------------------------------------!
 	//clock_t start;
