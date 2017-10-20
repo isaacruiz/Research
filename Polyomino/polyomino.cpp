@@ -152,7 +152,7 @@ bool Polyomino::tiles2()
 	//int l;		//index for vector of factors that end at poistion l
 	int Clength;
 	float ci;	//midpoint index of remaining factor
-	for (i = 0; i < boundaryLength; i++)
+	for (i = 0; i < boundaryLength/2; i++)
 	{
 		ei = 0;
 		si = 0;
