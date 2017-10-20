@@ -29,8 +29,8 @@ int main()
 	test(p2.circularWord());
 	test(!p2.collision());
 	test(!p2.clockwise());
-	//test(!p2.tiles());
-	//test(!p2.tiles2());
+	test(!p2.tiles());
+	test(!p2.tiles2());
 
 	////Shift of Boundary 1
 	Polyomino p3("swne");
