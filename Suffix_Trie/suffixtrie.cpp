@@ -55,7 +55,7 @@ SuffixTrie::SuffixTrie(string s)
 	}
 }
 
-
+//range min query
 //BUG IN DELETE FUNCTION THAT NEEDS TO BE FIXED
 SuffixTrie :: ~SuffixTrie()
 {
